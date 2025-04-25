@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Watch Episode</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 >Watch Episode</h1>
+
+  <!-- Video Player -->
+  <div class="video-container mb-4">
+    <video id="video-player" controls width="100%">
+      <source th:src="${episodeStream.sources[0].url}" type="application/x-mpegURL">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Subtitles Dropdown -->
+  <div>
+    <h4>Subtitles</h4>
+    <select class="form-select" id="subtitles" onchange="changeSubtitle()">
+      <option th:each="subtitle : ${episodeStream.subtitles}" th:value="${subtitle.url}" th:text="${subtitle.lang}"></option>
+    </select>
+  </div>
+</div>
+
+<!--<script>-->
+<!--  // Function to change subtitles-->
+<!--  function changeSubtitle() {-->
+<!--    var player = document.getElementById('video-player');-->
+<!--    var subtitleUrl = document.getElementById('subtitles').value;-->
+
+<!--    // Remove existing subtitle tracks before adding new one-->
+<!--    var existingTracks = player.textTracks;-->
+<!--    for (var i = existingTracks.length - 1; i >= 0; i&#45;&#45;) {-->
+<!--      existingTracks[i].mode = 'disabled';-->
+<!--    }-->
+
+<!--    var track = document.createElement('track');-->
+<!--    track.kind = 'subtitles';-->
+<!--    track.src = subtitleUrl;-->
+<!--    track.default = true;-->
+<!--    player.appendChild(track);-->
+<!--  }-->
+<!--</script>-->
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

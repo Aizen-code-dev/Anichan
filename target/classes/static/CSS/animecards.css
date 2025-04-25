@@ -1,0 +1,133 @@
+.card-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .card {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    padding: 1px;
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.4s ease;
+    border-radius: 12px;
+  }
+
+  .card-base {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    text-shadow: 0 0 5px black;
+    z-index: 10;
+  }
+
+  /* Overlay that appears beside card on hover */
+  .card-hover-overlay {
+    position: relative;
+    top: 0;
+    left: 30%; /* Just to the right of the card */
+    width: 220px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    color: white;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+  }
+
+  /* Show overlay when card is hovered */
+  .card-container:hover .card-hover-overlay {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  /* Optional: slightly blur the card image when hovered */
+  .card-container:hover .card img {
+    filter: blur(2px);
+  }
+
+  .overlay-content p {
+    margin: 0.8rem 0;
+  }
+
+  .overlay-content button {
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* Swiper Buttons */
+  .swiper-button-next,
+  .swiper-button-prev {
+    bottom: 20px;
+    top: auto;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 10;
+  }
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 18px;
+    color: yellow;
+  }
+
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  /* 3 part section */
+  .grid-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    background-color: #111;
+    color: white;
+  }
+
+  .section-column {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-column h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ffcc00;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
+  }
+
+  .section-content {
+    flex: 1;
+    overflow-y: auto;
+  }

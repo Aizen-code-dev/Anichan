@@ -1,0 +1,158 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+    margin-bottom: 20px;
+}
+
+.navbar-brand {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.nav-link {
+    font-size: 1.1em;
+}
+
+.nav-item.dropdown .dropdown-menu {
+    min-width: 150px;
+}
+
+/* swiper */
+.swiper-container {
+    width: 100%;
+    height: 500px; /* Adjust height as needed */
+    position: relative;
+}
+
+.swiper-slide img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* Makes images cover the area evenly */
+    border-radius: 10px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    top: auto;
+    bottom: 15px;
+    right: 15px;
+    left: auto;
+    transform: translateY(0);
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 5px; /* Reduced padding */
+    border-radius: 50%;
+
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+   color: yellow;
+    font-size: 24px; /* Adjust this value to make it smaller */
+}
+
+.swiper-button-prev {
+    right: 5%;
+}
+
+
+/* Overlay on image (top-left corner) */
+.overlay {
+    position: absolute;
+    bottom: 5%; /* Move overlay closer to top */
+    left: 0px; /* Move overlay to the left */
+    background: rgba(0, 0, 0, 0.373); /* Dark overlay */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align text to the left */
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 1rem;
+    z-index: 10;
+    width: 100%;
+    text-align: left;
+    border-radius: 8px; /* Optional: Adds rounded corners to the overlay */
+  }
+
+  /* Title and Text */
+  .overlay h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .overlay p {
+    font-size: 1rem;
+    margin: 0.2rem 0;
+  }
+
+  .overlay button {
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    background: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .overlay button:hover {
+    background: #e0b200;
+  }
+
+  /* Hover effect to show the overlay */
+  .swiper-slide:hover .overlay {
+    opacity: 1;
+  }
+
+  /* Optional: blur the image on hover */
+  .swiper-slide:hover img {
+    filter: blur(3px);
+  }
+
+  /* Navigation buttons */
+  .swiper-button-next,
+  .swiper-button-prev {
+    z-index: 100;
+    color: #ffcc00;
+  }
+
+
+
+/* Centering content on the home page */
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Input and Button Styling */
+input[type="text"] {
+    padding: 12px;
+    width: 60%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2196F3;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+button:hover {
+    background-color: #1976D2;
+}
