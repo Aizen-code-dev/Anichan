@@ -1,7 +1,6 @@
 /* Pagination Controls */
 .pagination-controls {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   font-size: 1rem;
   display: flex;
   flex-wrap: wrap;
@@ -12,84 +11,92 @@
 
 .pagination-controls label {
   font-weight: 600;
-  color: #212529;
+  color: #343a40;
   margin-bottom: 0;
 }
 
 #episode-range {
   padding: 0.5rem 0.75rem;
   font-size: 0.95rem;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid #ced4da;
-  background-color: #ffffff;
+  background-color: #fff;
   transition: all 0.3s ease;
   cursor: pointer;
+
 }
 
-#episode-range:hover {
-  border-color: #0d6efd;
-}
-
+#episode-range:hover,
 #episode-range:focus {
   border-color: #0d6efd;
-  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
   outline: none;
 }
-
 /* Episode Grid */
 .episode-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem 0;
-  border-top: 2px solid #e0e0e0;
-  border-bottom: 2px solid #e0e0e0;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* smaller min width */
+  gap: 1rem; /* tighter spacing */
+  padding: 1.5rem 0;
+  border-top: 2px solid #dee2e6;
+  border-bottom: 2px solid #dee2e6;
+  align-items: stretch;
 }
 
 /* Episode Card Container */
 .episode-item {
   display: flex;
-  justify-content: center;
+  margin:10px;
+
 }
 
 /* Episode Card */
 .episode-card {
-  background-color: #fdfdfd;
-  border-radius: 12px;
-  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 0.75rem; /* smaller padding */
   text-align: center;
-  border: 1px solid #e4e6eb;
-  width: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  width: 150px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 150px;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  height: 80px;
 }
 
+/* Hover effect */
 .episode-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border-color: #c8d1fa;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  border-color: #b6d4fe;
+}
+
+/* Active state */
+.episode-card.active-episode {
+  border: 2px solid #0d6efd;
+  box-shadow: 0 0 10px rgba(13, 110, 253, 0.12);
 }
 
 /* Episode Number */
 .episode-number {
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #6f42c1;
-  margin-bottom: 0.3rem;
 }
 
 /* Episode Title */
 .episode-title {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #495057;
-  margin-top: 0.4rem;
-  line-height: 1.4;
-  min-height: 2.2rem;
-  overflow-wrap: break-word;
+  margin-top: 0.3rem;
+  line-height: 1.2;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 2.1em;
 }
 
 /* Episode Link */
@@ -97,17 +104,13 @@
   text-decoration: none;
   color: inherit;
   display: block;
+  height: 100%;
 }
 
-/* Responsive Grid Adjustments */
+/* Responsive Improvements */
 @media (max-width: 992px) {
   .episode-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
-
-  .episode-card {
-    padding: 1rem;
-    min-height: 130px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 }
 
@@ -117,20 +120,21 @@
   }
 
   .episode-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
   }
 
   .episode-card {
-    padding: 0.75rem;
-    min-height: 120px;
+    padding: 0.5rem;
   }
 
   .episode-number {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .episode-title {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+    min-height: 2em;
   }
 }
+

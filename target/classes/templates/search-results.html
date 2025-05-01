@@ -76,7 +76,7 @@
         <div class="anime-overlay">
           <h5 th:text="${result.title.english}"></h5>
           <p th:text="${result.description}"></p>
-          <button>Watch Now</button>
+         <a th:href="@{/anime-details/{animeId}(animeId=${result.id})}"><button>Watch Now</button></a>
         </div>
       </div>
     </div>
