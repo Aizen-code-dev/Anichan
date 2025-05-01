@@ -1,0 +1,82 @@
+/* ====== Pagination Controls ====== */
+.pagination-controls {
+  margin: 2rem 0;
+  font-size: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.pagination-controls label {
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 0;
+}
+
+#episode-range {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#episode-range:hover,
+#episode-range:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+  outline: none;
+}
+
+/* ====== Episode Grid Layout ====== */
+.episode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-top: 2px solid #e0e0e0;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.episode-item {
+  transition: transform 0.2s ease-in-out;
+}
+
+.episode-item:hover {
+  transform: scale(1.02);
+}
+
+.episode-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.episode-card {
+  background-color: #f8f9fa;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  transition: border-color 0.3s, background-color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.episode-card:hover {
+  background-color: #e9f5ff;
+  border-color: #0d6efd;
+}
+
+.episode-number strong {
+  font-size: 1.1rem;
+  color: #343a40;
+}
+
+/* Highlight active episode */
+.active-episode {
+  border-color: #198754 !important;
+  background-color: #d1e7dd !important;
+}
