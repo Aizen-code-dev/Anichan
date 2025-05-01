@@ -128,6 +128,22 @@ public class AnimeDetail {
         this.recommendations = recommendations;
     }
 
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+    public NextAiringEpisode getNextAiringEpisode() {
+        return nextAiringEpisode;
+    }
+
+    public void setNextAiringEpisode(NextAiringEpisode nextAiringEpisode) {
+        this.nextAiringEpisode = nextAiringEpisode;
+    }
+
+
     private Map<String, String> title;
     private int malId;
     private String description;
@@ -142,4 +158,7 @@ public class AnimeDetail {
     private int totalEpisodes;
     private List<Episode> episodes;
     private List<Recommendation> recommendations;
+    private List<Character> characters;
+    private NextAiringEpisode nextAiringEpisode;
+
 }

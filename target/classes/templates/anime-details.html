@@ -102,9 +102,24 @@
           <li class="list-inline-item " th:each="syn : ${animeDetail.synonyms}" th:text="${syn}"></li>
         </ul>
       </div>
+
+<!--      <h5 class="mt-4">Recommendations</h5>-->
+<!--      <ul class="list-inline">-->
+<!--        <li class="list-inline-item badge bg-primary me-1" th:each="genre : ${animeDetail.recommendations}" th:text="${recommendations}"></li>-->
+<!--      </ul>-->
+
     </div>
   </div>
 </div>
+<!-- Next Airing Episode Info -->
+<div class="next-airing-wrapper" th:if="${animeDetail.nextAiringEpisode != null}">
+  <div class="next-airing-circle">
+    <div class="next-airing-label">Next Episode</div>
+    <div class="next-airing-episode" th:text="'EP ' + ${animeDetail.nextAiringEpisode.episode}"></div>
+    <div class="next-airing-timer" id="countdown" th:data-airing-time="${animeDetail.nextAiringEpisode.airingTime}"></div>
+  </div>
+</div>
+
 
 
   <!-- Episodes Section with Pagination -->
@@ -133,6 +148,17 @@
     </div>
   </div>
 
+<!-- Characters Section -->
+<div class="characters-section">
+  <h2>Characters</h2>
+  <div class="characters-grid">
+    <div class="character-card" th:each="character : ${animeDetail.characters}">
+      <img th:src="${character.image}" alt="Character Image" class="character-image"/>
+      <div class="character-name" th:text="${character.name.full}"></div>
+      <div class="character-role" th:text="${character.role}"></div>
+    </div>
+  </div>
+</div>
 
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3 mt-5">
@@ -180,6 +206,30 @@
       const [start, end] = select.value.split('-').map(Number);
       filterEpisodesByRange(start, end);
     }
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const countdownElement = document.getElementById("countdown");
+    const airingTime = parseInt(countdownElement.getAttribute("data-airing-time") * 1000); // Convert to milliseconds
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const timeRemaining = airingTime - now;
+
+      if (timeRemaining <= 0) {
+        countdownElement.textContent = "Now Airing!";
+      } else {
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        countdownElement.textContent = `In ${hours}h ${minutes}m ${seconds}s`;
+      }
+    }
+
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown();  // Initial call to display the countdown immediately
   });
 </script>
 
