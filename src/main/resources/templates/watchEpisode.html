@@ -98,15 +98,15 @@
   <div class="episode-item"
        th:each="episode : ${animeDetail.episodes}"
        th:attr="data-episode-number=${episode.number}">
-    <a th:href="@{/watch/{animeId}/{episodeId}(animeId=${animeDetail.id}, episodeId=${episode.id})}" class="episode-link">
-      <div class="episode-card" th:classappend="${episode.id} == ${selectedEpisodeId} ? 'active-episode'">
-        <div class="episode-number">
-          <strong th:text="'Episode ' + ${episode.number}"></strong>
-        </div>
+    <a th:href="@{/watch/{animeId}/{episodeId}(animeId=${animeDetail.id}, episodeId=${episode.id})}"
+       class="episode-link">
+      <div class="episode-number" th:classappend="${episode.id} == ${selectedEpisodeId} ? 'active-episode'">
+        <strong th:text="${episode.number}"></strong>
       </div>
     </a>
   </div>
 </div>
+
 
 <script th:inline="javascript">
   /*<![CDATA[*/

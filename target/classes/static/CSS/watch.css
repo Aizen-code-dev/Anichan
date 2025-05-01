@@ -31,52 +31,50 @@
   box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
   outline: none;
 }
-
 /* ====== Episode Grid Layout ====== */
 .episode-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 1rem;
   padding: 2rem 0;
-  border-top: 2px solid #e0e0e0;
-  border-bottom: 2px solid #e0e0e0;
+  justify-items: center;
 }
 
+/* Episode Item Styling */
 .episode-item {
-  transition: transform 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.episode-item:hover {
-  transform: scale(1.02);
-}
-
+/* Link styling */
 .episode-link {
   text-decoration: none;
   color: inherit;
 }
 
-.episode-card {
-  background-color: #f8f9fa;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  padding: 1rem;
-  text-align: center;
-  transition: border-color 0.3s, background-color 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.episode-card:hover {
-  background-color: #e9f5ff;
-  border-color: #0d6efd;
-}
-
+/* Only display the number in a clean circular badge */
 .episode-number strong {
-  font-size: 1.1rem;
-  color: #343a40;
+  display: inline-block;
+  padding: 0.6rem 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.episode-number strong:hover {
+  background-color: #0d6efd;
+  color: #fff;
+  cursor: pointer;
 }
 
 /* Highlight active episode */
-.active-episode {
+.active-episode strong {
+  background-color: #198754 !important;
   border-color: #198754 !important;
-  background-color: #d1e7dd !important;
+  color: #fff !important;
 }
