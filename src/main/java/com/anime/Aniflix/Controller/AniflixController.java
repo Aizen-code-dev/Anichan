@@ -20,6 +20,8 @@ public class AniflixController {
         this.aniflixService = aniflixService;  // Constructor injection
     }
 
+
+
     // API endpoint for searching anime, returns AniflixSearchWrapper
     @GetMapping("/search/{query}")
     public Mono<AniflixSearchWrapper> search(@PathVariable String query) {

@@ -1,6 +1,6 @@
 package com.anime.Aniflix.Service;
 
-import com.anime.Aniflix.Model.aniflix.AniflixSearchResult;
+import com.anime.Aniflix.Model.Trending.TrendingWrapper;
 import com.anime.Aniflix.Model.aniflix.AniflixSearchWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,7 @@ public class AniflixService {
                 .retrieve()
                 .bodyToMono(AniflixSearchWrapper.class);
     }
+
 
 
 }
