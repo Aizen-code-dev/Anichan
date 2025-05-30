@@ -40,6 +40,45 @@ a:hover {
   color: #9b59b6;
 }
 
+.search-bar .input-group {
+  background-color: #1e1e1e;
+  border-radius: 50px;
+  overflow: hidden;
+  border: 1px solid #444;
+  transition: all 0.3s ease;
+}
+
+.search-bar .form-control {
+  background-color: transparent;
+  border: none;
+  color: #dcdcdc;
+  padding: 10px 16px;
+  font-size: 1em;
+  border-radius: 50px;
+}
+
+.search-bar .form-control::placeholder {
+  color: #aaa;
+}
+
+.search-bar .input-group-text {
+  background-color: transparent;
+  border: none;
+  color: #9b59b6;
+  padding-left: 14px;
+  font-size: 1.2em;
+}
+
+.search-bar .form-control:focus {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.search-bar .input-group:focus-within {
+  border-color: #9b59b6;
+  box-shadow: 0 0 5px rgba(155, 89, 182, 0.6);
+}
+
 /* Swiper */
 .swiper-container {
   width: 100%;
@@ -140,4 +179,97 @@ button {
 
 button:hover {
   background-color: #8e44ad;
+}
+
+
+
+
+.advanced-search-section {
+  background-color: #1c1c1c;
+  padding: 30px;
+  border-radius: 10px;
+  color: white;
+}
+
+.advanced-search-section h2 {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.advanced-search-section label {
+  font-weight: 500;
+}
+
+.advanced-search-section .form-control,
+.advanced-search-section .form-select {
+  background-color: #2b2b2b;
+  color: white;
+  border: 1px solid #444;
+}
+
+.advanced-search-section .form-control::placeholder {
+  color: #aaa;
+}
+
+.advanced-search-section .btn-primary {
+  background-color: #ff4c4c;
+  border: none;
+  font-weight: bold;
+}
+
+.advanced-search-section .btn-primary:hover {
+  background-color: #e03a3a;
+}
+
+.footer {
+  background-color: #1a1a1a;
+  color: #dcdcdc;
+  padding: 40px 20px;
+  margin-top: 50px;
+  font-size: 0.95rem;
+  text-align: center;
+  box-shadow: 0 -3px 10px rgba(0,0,0,0.7);
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-section.about h3 {
+  color: #9b59b6;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.footer-section.about p {
+  line-height: 1.6;
+  margin: 5px 0;
+  max-width: 500px;
+}
+
+.btn-buy-coffee {
+  display: inline-block;
+  background-color: #ff813f;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  box-shadow: 0 3px 6px rgba(255, 129, 63, 0.5);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-buy-coffee:hover {
+  background-color: #e67336;
 }

@@ -20,6 +20,7 @@
 </head>
 <body>
 
+<p>Website is under Development...</p>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -67,6 +68,7 @@
   </div>
 </nav>
 
+
 <!-- Swiper Slider -->
 <div class="swiper-container my-4">
   <div class="swiper-wrapper">
@@ -78,7 +80,7 @@
         <h3>One Piece</h3>
         <p>Rating: 8.9/10</p>
         <p>Total Episodes: 1000+</p>
-        <button class="watch-now">Watch Now</button>
+<!--        <button class="watch-now">Watch Now</button>-->
       </div>
     </div>
 
@@ -89,7 +91,7 @@
         <p>Rating: 7.8/10</p>
         <p>Total Episodes: 12</p>
         <p>one pies diecriptin</p>
-        <button class="watch-now">Watch Now</button>
+<!--        <button class="watch-now">Watch Now</button>-->
       </div>
     </div>
   </div>
@@ -100,44 +102,6 @@
 
 
 
-
-
-<Section id="top-airing">
-  <h2 class="top-airing">Top-airing</h2>
-  <Hr></Hr>
-  <!-- Swiper Slider -->
-  <div class="topairing-container my-4">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="card-container">
-          <div class="card">
-            <img src="thesupercube.jpg" alt="Anime">
-            <div class="card-base">
-              <h3>Title</h3>
-              <p>Rating: 9.5/10</p>
-            </div>
-          </div>
-          <div class="card-hover-overlay">
-            <div class="overlay-content">
-              <p>About this anime...</p>
-              <p>Genre: Action, Adventure</p>
-              <button>Watch Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-    </div>
-    <Hr></Hr>
-
-    <div class="tswiper-button-next"></div>
-    <div class="tswiper-button-prev"></div>
-
-  </div>
-</section>
-
 <section class="trending-section">
   <h2 class="section-heading">Trending Anime</h2>
   <div class="anime-grid">
@@ -146,10 +110,10 @@
       <div class="anime-card-image">
         <img th:src="${anime.image}" alt="Anime Image" />
         <!-- Rank number with symbol on the image -->
-        <div class="rank-number">
-          <span th:text="${iterStat.index + 1}">1</span>
-          <i class="fas fa-crown"></i> <!-- Example of a crown icon -->
-        </div>
+<!--        <div class="rank-number">-->
+<!--          <span th:text="${iterStat.index + 1}">1</span>-->
+<!--          <i class="fas fa-crown"></i> &lt;!&ndash; Example of a crown icon &ndash;&gt;-->
+<!--        </div>-->
       </div>
       <div class="anime-card-overlay">
         <h3 th:text="${anime.title.english != null ? anime.title.english : anime.title.romaji}">Title</h3>
@@ -178,36 +142,55 @@
 
 
 
-
-  <section id="three-section-grid" class="grid-section">
-  <div class="section-column">
-    <h2>Popular</h2>
-    <div class="section-content">
-      <!-- Content goes here -->
-      <p>Popular anime list or cards...</p>
-    </div>
-  </div>
-
-  <div class="section-column">
-    <h2>Latest Releases</h2>
-    <div class="section-content">
-      <!-- Content goes here -->
-      <p>Recently released episodes...</p>
-    </div>
-  </div>
-
-  <div class="section-column">
-    <h2>Top Rated</h2>
-    <div class="section-content">
-      <!-- Content goes here -->
-      <p>Top anime based on rating...</p>
+<section class="popular-section">
+  <h2 class="section-heading">Popular Anime</h2>
+  <div class="anime-grid">
+    <!-- Iterate over popularAnime passed from the controller -->
+    <div class="anime-card" th:each="anime, iterStat : ${popularAnime}">
+      <div class="anime-card-image">
+        <img th:src="${anime.image}" alt="Anime Image" />
+        <!-- Optional rank -->
+        <!-- <div class="rank-number">
+          <span th:text="${iterStat.index + 1}">1</span>
+          <i class="fas fa-fire"></i>
+        </div> -->
+      </div>
+      <div class="anime-card-overlay">
+        <h3 th:text="${anime.title.english != null ? anime.title.english : anime.title.romaji}">Title</h3>
+        <div class="anime-card-info">
+          <p><strong><i class="fas fa-star"></i> Rating:</strong> <span th:text="${anime.rating}"></span></p>
+          <p><strong><i class="fas fa-calendar-alt"></i> Release Date:</strong> <span th:text="${anime.releaseDate}"></span></p>
+          <p><strong><i class="fas fa-info-circle"></i> Status:</strong> <span th:text="${anime.status}"></span></p>
+          <p><strong><i class="fas fa-tv"></i> Episodes:</strong> <span th:text="${anime.totalEpisodes}"></span></p>
+          <p><strong><i class="fas fa-clock"></i> Duration:</strong> <span th:text="${anime.duration}"></span> minutes</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section>
-  ,<footer>&copy; Aniflix 2025 All rights reserved.</footer>
 </section>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+
+      <!-- About -->
+      <div class="footer-section about">
+        <h3>Aniflix</h3>
+        <p>Your go-to place for the latest and greatest anime streaming experience.</p>
+        <p>&copy; Aniflix 2025 · All rights reserved.</p>
+      </div>
+        <div style="margin-top: 20px;">
+          <a href="https://www.buymeacoffee.com/aizensama" target="_blank" rel="noopener noreferrer" class="btn-buy-coffee">
+            ☕ Buy Me Coffee
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
 
 <!-- Bootstrap and Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
