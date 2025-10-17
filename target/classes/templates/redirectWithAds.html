@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="'Redirecting to ' + ${animeTitle}">Redirecting...</title>
+  <link rel="icon" th:href="@{/Assets/logo.ico}" type="image/x-icon" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body { background: #111; color: #fff; text-align: center; padding-top: 80px; }
+    .ad-box { margin: 20px auto; background: #1b1b1b; border-radius: 8px; width: 80%; padding: 20px; }
+    .progress-bar { height: 10px; background: #0d6efd; width: 0%; border-radius: 5px; transition: width 0.2s; }
+  </style>
+</head>
+<body>
+
+<h1 th:text="'Redirecting to ' + ${animeTitle} + '...'">Redirecting...</h1>
+<p>We couldn't find this episode. Redirecting you to the best source...</p>
+
+<!-- Ads Section -->
+<div class="ad-box">
+  <p>Your advertisement here</p>
+</div>
+
+<div class="ad-box">
+  <p>Redirecting in <span id="countdown">4</span> seconds...</p>
+  <div style="background:#333;border-radius:5px;width:80%;margin:0 auto;">
+    <div class="progress-bar" id="progress"></div>
+  </div>
+  <button class="btn btn-outline-light mt-3" id="skip">Skip Now</button>
+</div>
+
+<script th:inline="javascript">
+  const redirectUrl = /*[[${redirectUrl}]]*/ '';
+  const localSearchUrl = /*[[${localSearchUrl}]]*/ '';
+
+  // Optional: Open your own search page in new tab for ads / user reference
+  window.open(localSearchUrl, '_blank');
+
+  let countdown = 4;
+  const timer = setInterval(() => {
+      countdown--;
+      document.getElementById('countdown').textContent = countdown;
+      const progress = document.getElementById('progress');
+      progress.style.width = `${(4 - countdown) * 25}%`;
+
+      if (countdown <= 0) {
+          clearInterval(timer);
+          window.location.href = redirectUrl;
+      }
+  }, 1000);
+
+  document.getElementById('skip').addEventListener('click', () => {
+      window.location.href = redirectUrl;
+  });
+</script>
+
+</body>
+</html>
