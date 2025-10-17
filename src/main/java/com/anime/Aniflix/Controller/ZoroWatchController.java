@@ -16,12 +16,21 @@ public class ZoroWatchController {
     public ZoroWatchController(ZoroWatchService zoroWatchService) {
         this.zoroWatchService = zoroWatchService;
     }
-
+    // ✅ Page route (renders Thymeleaf)
     @GetMapping("/watch")
+    public String showWatchPage(@RequestParam("episodeId") String episodeId, Model model) {
+        model.addAttribute("episodeId", episodeId);
+        return "watchEpisode";
+    }
+
+    // ✅ API endpoint (returns JSON)
+    @GetMapping("/api/watch")
+    @ResponseBody
     public ZoroWatchResponse getEpisodeStream(@RequestParam("episodeId") String episodeId,
                                               @RequestParam(defaultValue = "vidcloud") String server) {
         return zoroWatchService.getEpisodeStream(episodeId, server);
     }
-
-
 }
+
+
+

@@ -13,4 +13,5 @@ public class WebClientConfig {
                 .baseUrl("https://anichanapi.onrender.com")  // Replace with the actual base URL
                 .build();
     }
+
 }

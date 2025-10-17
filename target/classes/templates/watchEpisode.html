@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Watch Episode</title>
+
   <link rel="icon" th:href="@{/Assets/logo.ico}"
         type="image/x-icon" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet"  th:href="@{/CSS/style.css}">
   <link rel="stylesheet" th:href="@{/CSS/watch.css}">
   <script th:src="@{/script/watch.js}"></script>
-
-
 
   <script src="https://cdn.jsdelivr.net/npm/artplayer/dist/artplayer.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -110,8 +109,11 @@
 
 <script th:inline="javascript">
   /*<![CDATA[*/
-  const videoUrl = [[${episodeStream.sources[0].url}]];
-  const subtitles = [[${episodeStream.subtitles}]];
+ const episodeStream = [[${episodeStream}]]; // injects full JSON object
+    const videoUrl = episodeStream && episodeStream.sources && episodeStream.sources.length > 0
+        ? /*[[@{/api/zoro/proxy(url=${episodeStream.sources[0].url})}]]*/ ''
+        : null;
+    const subtitles = episodeStream && episodeStream.subtitles ? episodeStream.subtitles : [];
   /*]]>*/
 
   const subtitleTracks = subtitles.map(sub => ({
