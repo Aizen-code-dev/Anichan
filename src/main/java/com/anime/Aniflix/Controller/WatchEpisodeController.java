@@ -101,27 +101,22 @@ public class WatchEpisodeController {
             @PathVariable String episodeId,
             Model model
     ) {
-        // 1️⃣ Fetch episode stream
+        // Get stream info
         ZoroWatchResponse episodeStream = zoroWatchService.getEpisodeStream(episodeId, "vidcloud");
 
-        // 2️⃣ Fetch anime details
+        // Get anime details for title
         AnimeDetail animeDetail = animeService.getAnimeDetails(animeId);
 
-        // 3️⃣ Handle missing or empty stream
+        // If stream missing or empty, redirect immediately to HiAnime page with ads
         if (episodeStream == null || episodeStream.getSources() == null || episodeStream.getSources().isEmpty()) {
             try {
-                // Extract a single title string from Map<String,String>
                 String titleToEncode = animeDetail.getTitle().getOrDefault(
                         "english",
                         animeDetail.getTitle().values().stream().findFirst().orElse("Anime")
                 );
-
                 String encodedTitle = URLEncoder.encode(titleToEncode, StandardCharsets.UTF_8.toString());
 
-                // Local search URL
                 String localSearchUrl = "/api/anime/search/view?q=" + encodedTitle;
-
-                // HiAnime search URL
                 String hiAnimeSearchUrl = "https://hianime.to/search?keyword=" + encodedTitle;
 
                 model.addAttribute("localSearchUrl", localSearchUrl);
@@ -129,21 +124,19 @@ public class WatchEpisodeController {
                 model.addAttribute("animeTitle", titleToEncode);
 
             } catch (Exception e) {
-                // Fallback if encoding fails
                 model.addAttribute("localSearchUrl", "/");
                 model.addAttribute("redirectUrl", "https://hianime.to");
                 model.addAttribute("animeTitle", "Anime");
             }
 
-            // Show redirect page with ads
+            // Return fast redirect page
             return "redirectWithAds";
         }
 
-        // 4️⃣ Normal playback
+        // Normal playback
         model.addAttribute("episodeStream", episodeStream);
         model.addAttribute("animeDetail", animeDetail);
         model.addAttribute("selectedEpisodeId", episodeId);
-
-        return "watchEpisode"; // existing video player template
+        return "watchEpisode";
     }
 }

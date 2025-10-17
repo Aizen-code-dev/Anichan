@@ -28,7 +28,7 @@ public class HomeController {
             @RequestParam(defaultValue = "1") int page,
             Model model) {
 
-        int perPage = 6;
+        int perPage = 10;
 
         // Fetch Trending Anime
         TrendingWrapper trendingWrapper = trendingService.getTrendingAnime(page, perPage).block();
