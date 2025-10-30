@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>🎬 YouTube Video Downloader</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand text-purple fw-bold" href="/">AniChan</a>
+
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" th:href="@{/}">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container text-center mt-5">
+  <h2>🎬 YouTube Video Downloader</h2>
+  <form action="/video-downloader" method="post" class="mt-4">
+    <input type="text" name="url" placeholder="Paste YouTube link" class="form-control mb-3" required>
+    <button type="submit" class="btn btn-primary">Fetch Video Info</button>
+  </form>
+
+  <div th:if="${result != null}" class="mt-5 text-center">
+    <div th:if="${result.error}" class="alert alert-danger">
+      ❌ <strong>Error:</strong> <span th:text="${result.title}"></span>
+    </div>
+
+    <div th:if="${!result.error}">
+      <h3 th:text="${result.title}"></h3>
+      <img th:src="${result.thumbnail}" alt="Thumbnail" class="img-fluid my-3 rounded" style="max-width: 400px;">
+      <p>
+        <a th:href="${result.downloadUrl}" target="_blank" class="btn btn-danger">
+          <i class="fas fa-download"></i> Download MP4
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
