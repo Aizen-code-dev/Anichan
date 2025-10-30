@@ -1,7 +1,9 @@
 package com.anime.Aniflix.Controller;
 
+
 import com.anime.Aniflix.Model.Trending.TrendingWrapper;
 import com.anime.Aniflix.Model.populer.PopularAnimeWrapper;
+import com.anime.Aniflix.Model.DownloadResponse;
 import com.anime.Aniflix.Service.TrendingService;
 import com.anime.Aniflix.Service.PopularService;
 
@@ -9,18 +11,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.anime.Aniflix.Service.DownloaderService;
 
 @Controller
 public class HomeController {
 
     private final TrendingService trendingService;
     private final PopularService popularService;
+    private final DownloaderService downloaderService;
+
 
     @Autowired
-    public HomeController(TrendingService trendingService, PopularService popularService) {
+    public HomeController(TrendingService trendingService, PopularService popularService , DownloaderService downloaderService) {
         this.trendingService = trendingService;
         this.popularService = popularService;
+        this.downloaderService=downloaderService;
     }
 
     @GetMapping("/")
@@ -44,4 +51,29 @@ public class HomeController {
 
         return "index";
     }
+//
+@GetMapping("/music-downloader")
+public String showMusicDownloader() {
+    return "music-downloader";
+}
+
+    @PostMapping("/music-downloader")
+    public String downloadMusic(@RequestParam("url") String url, Model model) {
+        DownloadResponse result = downloaderService.downloadMusic(url);
+        model.addAttribute("result", result);
+        return "music-downloader";
+    }
+
+    @GetMapping("/video-downloader")
+    public String showVideoDownloader() {
+        return "video-downloader";
+    }
+
+    @PostMapping("/video-downloader")
+    public String downloadVideo(@RequestParam("url") String url, Model model) {
+        DownloadResponse result = downloaderService.downloadVideo(url);
+        model.addAttribute("result", result);
+        return "video-downloader";
+    }
+
 }

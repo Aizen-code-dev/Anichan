@@ -392,3 +392,18 @@ button:hover {
 .btn-buy-coffee:hover {
   background-color: #e67336;
 }
+.feature-card {
+  display: block;
+  background-color: #1e1e1e;
+  color: #eee;
+  border-radius: 15px;
+  padding: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+.feature-card:hover {
+  background-color: #2a2a2a;
+  color: #a64aff;
+  transform: translateY(-3px);
+}
