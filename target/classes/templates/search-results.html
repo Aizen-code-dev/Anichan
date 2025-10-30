@@ -16,15 +16,16 @@
 <body class="bg-dark text-light">
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-black border-bottom border-secondary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand brand-purple" th:href="@{/}">AniChan</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand text-purple fw-bold" href="/">AniFlix</a>
+
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" th:href="@{/}">Home</a>
@@ -38,28 +39,18 @@
         <li class="nav-item">
           <a class="nav-link" th:href="@{/top-airing}">Top Airing</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-             aria-expanded="false">
-            Categories
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" th:href="@{/category/action}">Action</a></li>
-            <li><a class="dropdown-item" th:href="@{/category/adventure}">Adventure</a></li>
-            <li><a class="dropdown-item" th:href="@{/category/comedy}">Comedy</a></li>
-            <li><a class="dropdown-item" th:href="@{/category/drama}">Drama</a></li>
-          </ul>
-        </li>
       </ul>
 
-      <form class="d-flex" th:action="@{/api/anime/search/view}" method="get">
-        <input class="form-control me-2" type="search" name="q" placeholder="Search anime..." aria-label="Search" required>
-        <button class="btn btn-outline-primary" type="submit">Search</button>
+      <!-- Search Bar -->
+      <form class="d-flex search-bar" th:action="@{/api/anime/search/view}" method="get">
+        <div class="input-group">
+          <input class="form-control" type="search" name="q" placeholder="Search anime..." aria-label="Search" required>
+          <button class="btn btn-purple" type="submit">Search</button>
+        </div>
       </form>
     </div>
   </div>
 </nav>
-
 <!-- Main Content -->
 <div class="container my-5">
   <h1 class="mb-4 text-purple">Search Results for: <span th:text="${query}"></span></h1>
@@ -84,6 +75,18 @@
       </div>
     </div>
   </div>
+</div>
+<!-- Bottom Banner Ad -->
+<div class="container my-4 text-center">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-8841196775456939"
+       data-ad-slot="7107132738"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 </div>
 
 <!-- Footer -->
