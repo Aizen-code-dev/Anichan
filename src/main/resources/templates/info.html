@@ -7,95 +7,24 @@
     <link rel="stylesheet" th:href="@{/CSS/style.css}">
     <style>
         body { background-color: #0d0d0d; color: white; }
-        .manga-header {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 2rem;
-            align-items: center;
-        }
-        .manga-cover {
-            width: 220px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-        }
-        .manga-info {
-            flex: 1;
-        }
-        .manga-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #c87bff;
-        }
-        .manga-meta span {
-            background-color: #1f1f1f;
-            border-radius: 8px;
-            padding: 0.25rem 0.6rem;
-            margin-right: 0.5rem;
-            color: #ddd;
-            font-size: 0.9rem;
-        }
-        .manga-desc {
-            margin-top: 1rem;
-            color: #bbb;
-        }
-        .chapters-container {
-            margin-top: 2.5rem;
-        }
-        .chapter-card {
-            background-color: #1a1a1a;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            margin-bottom: 0.6rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.2s ease;
-        }
-        .chapter-card:hover {
-            background-color: #252525;
-            transform: translateY(-2px);
-        }
-        .chapter-link {
-            color: #c87bff;
-            text-decoration: none;
-            font-weight: 500;
-        }
+        .manga-header { display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 2rem; align-items: center; }
+        .manga-cover { width: 220px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        .manga-info { flex: 1; }
+        .manga-title { font-size: 2rem; font-weight: 700; color: #c87bff; }
+        .manga-meta span { background-color: #1f1f1f; border-radius: 8px; padding: 0.25rem 0.6rem; margin-right: 0.5rem; color: #ddd; font-size: 0.9rem; }
+        .manga-desc { margin-top: 1rem; color: #bbb; }
+        .chapters-container { margin-top: 2.5rem; }
+        .chapter-card { background-color: #1a1a1a; padding: 0.8rem 1rem; border-radius: 10px; margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
+        .chapter-card:hover { background-color: #252525; transform: translateY(-2px); }
+        .chapter-link { color: #c87bff; text-decoration: none; font-weight: 500; }
         .chapter-link:hover { text-decoration: underline; }
-
-        .load-more {
-            background-color: #c87bff;
-            border: none;
-            color: white;
-            border-radius: 8px;
-            padding: 0.6rem 1.4rem;
-            margin: 1rem auto;
-            display: block;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        .load-more:hover {
-            background-color: #b45aff;
-            transform: scale(1.05);
-        }
+        .pagination-select { margin: 1rem 0; padding: 0.5rem 0.8rem; border-radius: 6px; border: none; background-color: #1a1a1a; color: white; }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-purple" href="/">AniChan</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" th:href="@{/manga}">Manga</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <div class="container">
-    <!-- Manga Header -->
+    <!-- Manga Header (same as before) -->
     <div class="manga-header">
         <img th:src="@{'/proxy/image?url=' + ${manga.image}}" alt="Manga Cover" class="manga-cover"/>
         <div class="manga-info">
@@ -111,66 +40,64 @@
         </div>
     </div>
 
-
-    <!-- Chapters -->
+    <!-- Chapters with Pagination -->
     <div class="chapters-container mt-4">
         <h3 class="mb-3">Chapters</h3>
+        <div>
+            <label for="pageSelect">Jump to:</label>
+            <select id="pageSelect" class="pagination-select"></select>
+        </div>
         <div id="chapter-list">
-            <div th:each="chapter, iter : ${manga.chapters}"
-                 th:if="${iter.index < 20}"
-                 class="chapter-card">
+            <div th:each="chapter : ${manga.chapters}" class="chapter-card">
                 <a class="chapter-link"
                    th:href="@{'/manga/read/' + ${chapter.id}}"
                    th:text="'Chapter ' + ${chapter.chapterNumber} + ' - ' + ${chapter.title}"></a>
                 <span class="text-secondary small" th:text="${chapter.releaseDate}"></span>
             </div>
         </div>
-
-        <button id="loadMore" class="load-more">Load More</button>
-    </div>
-</div>
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-
-            <!-- Bottom Banner Ad -->
-            <div class="container my-4 text-center">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-8841196775456939"
-                     data-ad-slot="9224377224"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-
-        </div>
     </div>
 
+    <script>
+        const chapters = Array.from(document.querySelectorAll('#chapter-list .chapter-card')).reverse(); // latest first
+        const pageSelect = document.getElementById('pageSelect');
+        const chaptersPerPage = 100;
+        const totalChapters = chapters.length;
+        const totalPages = Math.ceil(totalChapters / chaptersPerPage);
 
-</footer>
-<script>
-    let visibleCount = 20;
-    const chapters = document.querySelectorAll('#chapter-list .chapter-card');
-    const loadMoreBtn = document.getElementById('loadMore');
+        // Generate dropdown options with correct ranges (latest first)
+        for (let i = 0; i < totalPages; i++) {
+            const startIdx = i * chaptersPerPage;
+            const endIdx = Math.min((i + 1) * chaptersPerPage, totalChapters);
+            const option = document.createElement('option');
 
-    loadMoreBtn.addEventListener('click', () => {
-        visibleCount += 20;
-        chapters.forEach((ch, idx) => {
-            if (idx < visibleCount) ch.style.display = 'flex';
-        });
-        if (visibleCount >= chapters.length) {
-            loadMoreBtn.style.display = 'none';
+            const startChapterNum = chapters[startIdx].querySelector('.chapter-link').textContent.match(/\d+/)[0];
+            const endChapterNum = chapters[endIdx - 1].querySelector('.chapter-link').textContent.match(/\d+/)[0];
+
+            option.value = i;
+            option.textContent = `${startChapterNum} - ${endChapterNum}`;
+            pageSelect.appendChild(option);
         }
-    });
 
-    // Hide extra chapters initially
-    chapters.forEach((ch, idx) => {
-        if (idx >= 20) ch.style.display = 'none';
-    });
-</script>
+        // Function to display only selected page
+        function showPage(pageIndex) {
+            chapters.forEach((ch, idx) => {
+                if (idx >= pageIndex * chaptersPerPage && idx < (pageIndex + 1) * chaptersPerPage) {
+                    ch.style.display = 'flex';
+                } else {
+                    ch.style.display = 'none';
+                }
+            });
+        }
+
+        // Show first page by default (latest chapters)
+        showPage(0);
+        pageSelect.value = 0;
+
+        // Change page on dropdown selection
+        pageSelect.addEventListener('change', () => {
+            showPage(parseInt(pageSelect.value));
+        });
+    </script>
 
 </body>
 </html>
