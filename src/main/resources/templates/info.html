@@ -97,7 +97,7 @@
 <div class="container">
     <!-- Manga Header -->
     <div class="manga-header">
-        <img th:src="${manga.image}" alt="Manga Cover" class="manga-cover"/>
+        <img th:src="@{'/proxy/image?url=' + ${manga.image}}" alt="Manga Cover" class="manga-cover"/>
         <div class="manga-info">
             <div class="manga-title" th:text="${manga.title}">Manga Title</div>
             <div class="manga-meta mt-2">
@@ -110,6 +110,7 @@
             <p class="manga-desc" th:text="${manga.description}"></p>
         </div>
     </div>
+
 
     <!-- Chapters -->
     <div class="chapters-container mt-4">

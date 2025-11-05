@@ -116,10 +116,11 @@
   <div class="grid" th:if="${results}">
     <div class="card" th:each="m : ${results}">
       <a th:href="@{'/manga/info/' + ${m.id}}" style="text-decoration:none; color:white;">
-        <img th:src="${m.image}" th:alt="${m.title}">
+        <img th:src="@{'/proxy/image?url=' + ${m.image}}" th:alt="${m.title}">
         <p th:text="${m.title}"></p>
       </a>
     </div>
+
   </div>
 
   <div class="text-center mt-5" th:if="${#lists.isEmpty(results)}">

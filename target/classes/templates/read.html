@@ -80,7 +80,10 @@
         <span id="pageNum">1</span> / <span th:text="${pages.size()}"></span>
     </div>
 
-    <img id="readerImage" th:src="${pages[0]}" alt="Manga Page" class="reader-image"/>
+    <img id="readerImage"
+         th:src="@{'/proxy/image?url=' + ${pages[0]}}"
+         alt="Manga Page"
+         class="reader-image"/>
 
     <div class="nav-buttons">
         <button id="prevBtn" class="nav-btn">⏮ Prev</button>
@@ -100,7 +103,7 @@
     function updatePage() {
         imgEl.style.opacity = 0;
         setTimeout(() => {
-            imgEl.src = pages[currentPage];
+            imgEl.src = `/proxy/image?url=${encodeURIComponent(pages[currentPage])}`;
             pageNumEl.textContent = currentPage + 1;
             imgEl.style.opacity = 1;
         }, 150);
@@ -131,11 +134,12 @@
         if (diff < -50 && currentPage < pages.length - 1) { currentPage++; updatePage(); } // swipe left
     });
 
-    // Keyboard navigation (optional)
+    // Keyboard navigation
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowRight') nextBtn.click();
         if (e.key === 'ArrowLeft') prevBtn.click();
     });
+
 </script>
 
 </body>
