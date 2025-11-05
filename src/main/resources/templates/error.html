@@ -2,17 +2,92 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta name="google-adsense-account" content="ca-pub-8841196775456939">
-
-
   <title>Error - AniChan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+    body {
+        background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .error-container {
+        max-width: 600px;
+        padding: 40px;
+        background: #1f1f1f;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    .error-container h1 {
+        font-size: 6rem;
+        font-weight: 700;
+        color: #c87bff;
+        margin-bottom: 20px;
+    }
+
+    .error-container p {
+        font-size: 1.5rem;
+        color: #ccc;
+        margin-bottom: 30px;
+    }
+
+    .btn-home {
+        background: linear-gradient(90deg, #c87bff, #b45aff);
+        color: white;
+        font-weight: 600;
+        padding: 12px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        box-shadow: 0 6px 15px rgba(200,123,255,0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-home:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(200,123,255,0.6);
+        background: linear-gradient(90deg, #b45aff, #c87bff);
+    }
+
+    /* Optional floating illustration */
+    .error-illustration {
+        margin-top: 30px;
+        max-width: 250px;
+        opacity: 0.85;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 768px) {
+        .error-container h1 {
+            font-size: 4rem;
+        }
+        .error-container p {
+            font-size: 1.2rem;
+        }
+    }
+  </style>
 </head>
-<body style="background-color:#0d0d0d; color:white; text-align:center; padding: 100px;">
-<h1 style="font-size: 4rem;">Something Went Wrong</h1>
-<p style="font-size: 1.5rem;">Oops! We couldn't load the page you're looking for.</p>
-<a th:href="@{/}" class="btn btn-primary" style="margin-top: 20px;">Return to Home</a>
+<body>
+
+<div class="error-container">
+  <p>Oops! We couldn't find the page you're looking for.</p>
+  <a th:href="@{/}" class="btn-home">Return to Home</a>
+  <img class="error-illustration" src="https://img.icons8.com/external-flaticons-flat-flat-icons/256/external-error-interface-flaticons-flat-flat-icons.png" >
+</div>
 
 </body>
-
 </html>

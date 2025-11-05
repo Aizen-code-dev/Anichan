@@ -75,21 +75,60 @@
 </head>
 <body>
 
-<div class="reader-container">
-    <div class="page-indicator">
-        <span id="pageNum">1</span> / <span th:text="${pages.size()}"></span>
+<div class="reader-wrapper d-flex justify-content-center align-items-start" style="position: relative; gap: 1rem;">
+
+    <!-- Left Ad (Desktop only) -->
+    <div class="ad-container d-none d-lg-block">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8841196775456939"
+             data-ad-slot="9224377224"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
     </div>
 
-    <img id="readerImage"
-         th:src="@{'/proxy/image?url=' + ${pages[0]}}"
-         alt="Manga Page"
-         class="reader-image"/>
+    <!-- Reader Container -->
+    <div class="reader-container" style="position: relative;">
+        <div class="page-indicator">
+            <span id="pageNum">1</span> / <span th:text="${pages.size()}"></span>
+        </div>
 
-    <div class="nav-buttons">
-        <button id="prevBtn" class="nav-btn">⏮ Prev</button>
-        <button id="nextBtn" class="nav-btn">Next ⏭</button>
+        <!-- Loader -->
+        <div id="loader" style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%); z-index:10;">
+            <div class="spinner-border text-purple" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <img id="readerImage"
+             alt="Manga Page"
+             class="reader-image"
+             style="display:none; max-width:100%; max-height:90vh; border-radius:8px; box-shadow:0 0 20px rgba(255,255,255,0.1);"/>
+
+        <div class="nav-buttons">
+            <button id="prevBtn" class="nav-btn">⏮ Prev</button>
+            <button id="nextBtn" class="nav-btn">Next ⏭</button>
+        </div>
     </div>
+
+    <!-- Right Ad (Desktop only) -->
+    <div class="ad-container d-none d-lg-block">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8841196775456939"
+             data-ad-slot="9224377224"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
 </div>
+
 
 <script th:inline="javascript">
     const pages = /*[[${pages}]]*/ [];
@@ -99,39 +138,45 @@
     const pageNumEl = document.getElementById('pageNum');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const loader = document.getElementById('loader');
 
     function updatePage() {
-        imgEl.style.opacity = 0;
-        setTimeout(() => {
-            imgEl.src = `/proxy/image?url=${encodeURIComponent(pages[currentPage])}`;
+        loader.style.display = 'block';
+        imgEl.style.display = 'none';
+
+        // Set the image src via JS after showing loader
+        imgEl.src = '/proxy/image?url=' + encodeURIComponent(pages[currentPage]);
+
+        imgEl.onload = () => {
+            loader.style.display = 'none';
+            imgEl.style.display = 'block';
             pageNumEl.textContent = currentPage + 1;
-            imgEl.style.opacity = 1;
-        }, 150);
+        };
+
         prevBtn.disabled = currentPage === 0;
         nextBtn.disabled = currentPage === pages.length - 1;
     }
 
     nextBtn.addEventListener('click', () => {
-        if (currentPage < pages.length - 1) {
-            currentPage++;
-            updatePage();
-        }
+        if (currentPage < pages.length - 1) { currentPage++; updatePage(); }
     });
 
     prevBtn.addEventListener('click', () => {
-        if (currentPage > 0) {
-            currentPage--;
-            updatePage();
-        }
+        if (currentPage > 0) { currentPage--; updatePage(); }
     });
+
+    // Initialize first page
+    updatePage();
+
+
 
     // Swipe navigation for mobile
     let startX = 0;
     imgEl.addEventListener('touchstart', e => startX = e.touches[0].clientX);
     imgEl.addEventListener('touchend', e => {
         const diff = e.changedTouches[0].clientX - startX;
-        if (diff > 50 && currentPage > 0) { currentPage--; updatePage(); } // swipe right
-        if (diff < -50 && currentPage < pages.length - 1) { currentPage++; updatePage(); } // swipe left
+        if (diff > 50 && currentPage > 0) { currentPage--; updatePage(); }
+        if (diff < -50 && currentPage < pages.length - 1) { currentPage++; updatePage(); }
     });
 
     // Keyboard navigation
@@ -139,7 +184,6 @@
         if (e.key === 'ArrowRight') nextBtn.click();
         if (e.key === 'ArrowLeft') prevBtn.click();
     });
-
 </script>
 
 </body>
