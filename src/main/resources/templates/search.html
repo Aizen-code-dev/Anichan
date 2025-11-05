@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Search Results</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #0d0d0d; color: white; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin: 20px; }
+    .card { background: #1a1a1a; border-radius: 10px; text-align: center; padding: 10px; transition: 0.3s; }
+    .card:hover { transform: scale(1.05); }
+    img { width: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" th:href="@{/}">AniChan</a>
+    <a class="nav-link active" th:href="@{/manga}">Manga</a>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h3 th:text="'Results for: ' + ${query}"></h3>
+  <div class="grid mt-3" th:if="${results}">
+    <div class="card" th:each="m : ${results}">
+      <a th:href="@{'/manga/info/' + ${m.id}}" style="text-decoration:none; color:white;">
+        <img th:src="${m.image}" th:alt="${m.title}">
+        <p th:text="${m.title}" class="mt-2"></p>
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

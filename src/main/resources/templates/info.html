@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${manga.title} + ' | AniChan Manga'">Manga Info</title>
+    <link rel="icon" th:href="@{/Assets/logo.ico}" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/CSS/style.css}">
+    <style>
+        body { background-color: #0d0d0d; color: white; }
+        .manga-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+        .manga-cover {
+            width: 220px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+        .manga-info {
+            flex: 1;
+        }
+        .manga-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #c87bff;
+        }
+        .manga-meta span {
+            background-color: #1f1f1f;
+            border-radius: 8px;
+            padding: 0.25rem 0.6rem;
+            margin-right: 0.5rem;
+            color: #ddd;
+            font-size: 0.9rem;
+        }
+        .manga-desc {
+            margin-top: 1rem;
+            color: #bbb;
+        }
+        .chapters-container {
+            margin-top: 2.5rem;
+        }
+        .chapter-card {
+            background-color: #1a1a1a;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        .chapter-card:hover {
+            background-color: #252525;
+            transform: translateY(-2px);
+        }
+        .chapter-link {
+            color: #c87bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .chapter-link:hover { text-decoration: underline; }
+
+        .load-more {
+            background-color: #c87bff;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            padding: 0.6rem 1.4rem;
+            margin: 1rem auto;
+            display: block;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .load-more:hover {
+            background-color: #b45aff;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-purple" href="/">AniChan</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/manga}">Manga</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Manga Header -->
+    <div class="manga-header">
+        <img th:src="${manga.image}" alt="Manga Cover" class="manga-cover"/>
+        <div class="manga-info">
+            <div class="manga-title" th:text="${manga.title}">Manga Title</div>
+            <div class="manga-meta mt-2">
+                <span th:text="'Status: ' + ${manga.status}">Completed</span>
+                <span th:text="'Year: ' + ${manga.releaseDate}">2023</span>
+            </div>
+            <div class="manga-meta mt-2">
+                <span th:each="genre : ${manga.genres}" th:text="${genre}"></span>
+            </div>
+            <p class="manga-desc" th:text="${manga.description}"></p>
+        </div>
+    </div>
+
+    <!-- Chapters -->
+    <div class="chapters-container mt-4">
+        <h3 class="mb-3">Chapters</h3>
+        <div id="chapter-list">
+            <div th:each="chapter, iter : ${manga.chapters}"
+                 th:if="${iter.index < 20}"
+                 class="chapter-card">
+                <a class="chapter-link"
+                   th:href="@{'/manga/read/' + ${chapter.id}}"
+                   th:text="'Chapter ' + ${chapter.chapterNumber} + ' - ' + ${chapter.title}"></a>
+                <span class="text-secondary small" th:text="${chapter.releaseDate}"></span>
+            </div>
+        </div>
+
+        <button id="loadMore" class="load-more">Load More</button>
+    </div>
+</div>
+
+<script>
+    let visibleCount = 20;
+    const chapters = document.querySelectorAll('#chapter-list .chapter-card');
+    const loadMoreBtn = document.getElementById('loadMore');
+
+    loadMoreBtn.addEventListener('click', () => {
+        visibleCount += 20;
+        chapters.forEach((ch, idx) => {
+            if (idx < visibleCount) ch.style.display = 'flex';
+        });
+        if (visibleCount >= chapters.length) {
+            loadMoreBtn.style.display = 'none';
+        }
+    });
+
+    // Hide extra chapters initially
+    chapters.forEach((ch, idx) => {
+        if (idx >= 20) ch.style.display = 'none';
+    });
+</script>
+
+</body>
+</html>
