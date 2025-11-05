@@ -66,55 +66,65 @@
   <div class="swiper-wrapper">
     <div class="swiper-slide">
       <img src="onepiece.jpg" alt="One Piece anime poster showing Luffy in action with the crew">
-      <div class="overlay">
+      <div class="overlay featured-overlay">
         <h3>One Piece</h3>
-        <p>Rating: 8.9/10 | Total Episodes: 1000+</p>
-        <p>Follow Luffy and the Straw Hat Pirates on their epic journey to find the legendary One Piece treasure. A must-watch classic with an engaging story and lovable characters.</p>
+        <p class="featured-rating">Rating: 8.9/10 | Total Episodes: 1000+</p>
+        <p class="featured-description">
+          Follow Luffy and the Straw Hat Pirates on their epic journey to find the legendary One Piece treasure. A must-watch classic with an engaging story and lovable characters.
+        </p>
+        <a th:href="@{/api/anime/search/view(q='onepiece')}" class="btn-featured">Watch Now</a>
       </div>
     </div>
     <div class="swiper-slide">
       <img src="demon.jpg" alt="Demon Slayer anime poster featuring Tanjiro fighting demons">
-      <div class="overlay">
+      <div class="overlay featured-overlay">
         <h3>Demon Slayer</h3>
-        <p>Rating: 8.57/10 | Total Episodes: 26</p>
-        <p>Tanjiro embarks on a dangerous mission to save his sister and defeat demons. Stunning animation and heartfelt storytelling make this a modern favorite.</p>
+        <p class="featured-rating">Rating: 8.57/10 | Total Episodes: 26</p>
+        <p class="featured-description">
+          Tanjiro embarks on a dangerous mission to save his sister and defeat demons. Stunning animation and heartfelt storytelling make this a modern favorite.
+        </p>
+        <a th:href="@{/api/anime/search/view(q='Demon Slayer')}" class="btn-featured">Watch Now</a>
       </div>
     </div>
+    <!-- Jujutsu Kaisen Slide -->
     <div class="swiper-slide">
-      <img src="bleach.jpg" alt="Bleach anime poster showing Ichigo wielding his sword">
-      <div class="overlay">
-        <h3>Bleach</h3>
-        <p>Rating:7.8/10 | Total Episodes: 366</p>
-        <p>Follow Ichigo Kurosaki as he gains Soul Reaper powers and battles evil spirits. Classic shonen action with a large fanbase.</p>
-      </div>
-    </div>
-    <div class="swiper-slide">
-      <img src="jujutsu.jpg" alt="Jujutsu Kaisen anime poster with Yuji Itadori in action">
-      <div class="overlay">
+      <img src="jujutsu.jpg" alt="Jujutsu Kaisen anime poster featuring Yuji Itadori and Sukuna">
+      <div class="overlay featured-overlay">
         <h3>Jujutsu Kaisen</h3>
-        <p>Rating:8.14/10 | Total Episodes: 24</p>
-        <p>Yuji Itadori joins the world of sorcerers to battle curses and protect humanity. Packed with thrilling fights and dark fantasy elements.</p>
+        <p class="featured-rating">Rating: 8.8/10 | Total Episodes: 24</p>
+        <p class="featured-description">
+          Follow Yuji Itadori as he joins the world of jujutsu sorcerers to fight curses and uncover the secrets of Sukuna. Action-packed and emotionally gripping anime.
+        </p>
+        <a th:href="@{/api/anime/search/view(q='Jujutsu Kaisen')}" class="btn-featured">Watch Now</a>
       </div>
     </div>
+
+    <!-- Bleach Slide -->
     <div class="swiper-slide">
-      <img src="sololeveling.jpg" alt="Solo Leveling anime poster featuring Sung Jin-Woo">
-      <div class="overlay">
-        <h3>Solo Leveling</h3>
-        <p>Rating:8.8/10 | Total Episodes: 13</p>
-        <p>Sung Jin-Woo’s rise from the weakest hunter to a legendary force is an exhilarating journey filled with monsters and power-ups.</p>
+      <img src="bleach.jpg" alt="Bleach anime poster featuring Ichigo Kurosaki and Soul Reapers">
+      <div class="overlay featured-overlay">
+        <h3>Bleach</h3>
+        <p class="featured-rating">Rating: 8.2/10 | Total Episodes: 366</p>
+        <p class="featured-description">
+          Follow Ichigo Kurosaki as he becomes a Soul Reaper to protect the living and the dead. A classic shonen anime full of thrilling battles and memorable characters.
+        </p>
+        <a th:href="@{/api/anime/search/view(q='Bleach')}" class="btn-featured">Watch Now</a>
       </div>
     </div>
+
+    <!-- Add other slides similarly -->
   </div>
-  <div class="swiper-button-next featured-next"></div>
-  <div class="swiper-button-prev featured-prev"></div>
+<!--  <div class="swiper-button-next featured-next"></div>-->
+<!--  <div class="swiper-button-prev featured-prev"></div>-->
 </div>
 
 <!-- Featured Section Description -->
 <div class="container mt-3 text-white">
-  <p style="max-width: 800px; margin: 0 auto; text-align:center;">
+  <p class="featured-intro text-center">
     Explore the most popular and trending anime series curated for you. Each series includes ratings, episodes, and a short summary to help you choose your next favorite anime. Enjoy a rich and immersive anime experience on AniChan.
   </p>
 </div>
+
 
 <!-- Trending Section -->
 <section class="trending-section my-4">

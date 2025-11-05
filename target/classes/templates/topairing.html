@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Top Airing Anime</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/CSS/animecards.css}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #0d0d0d; color: #fff; font-family: 'Poppins', sans-serif; }
+    .section-heading { text-align: center; font-size: 2rem; margin-bottom: 1rem; color: #c87bff; }
+    .anime-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(180px,1fr)); gap: 1rem; margin: 20px; }
+    .anime-card {
+        background: #1a1a1a;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .anime-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(200,123,255,0.4);
+    }
+    .anime-card img { width: 100%; display: block; border-radius: 12px; }
+    .anime-card-overlay {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.7);
+        padding: 10px;
+        transition: transform 0.3s ease;
+        transform: translateY(100%);
+    }
+    .anime-card:hover .anime-card-overlay { transform: translateY(0); }
+    .anime-card-info p { margin: 2px 0; font-size: 0.85rem; color: #ddd; }
+    .anime-card h3 { font-size: 1rem; margin-bottom: 5px; color: #fff; }
+    .badge-rating {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background: #c87bff;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <a class="navbar-brand text-purple fw-bold" th:href="@{/}">AniChan</a>
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item"><a class="nav-link" th:href="@{/popular}">Popular</a></li>
+      <li class="nav-item"><a class="nav-link active" th:href="@{/top-airing}">Top Airing</a></li>
+      <li class="nav-item"><a class="nav-link" th:href="@{/manga}">Manga</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="topairing-section my-4">
+  <h2 class="section-heading">Top Airing Anime</h2>
+  <p style="max-width: 800px; margin: 0 auto 20px; text-align:center; color:#ccc;">
+    Check out the hottest anime titles this season. Discover top-ranked series with ratings, release dates, and episode counts.
+  </p>
+
+  <div class="anime-grid">
+    <div class="anime-card" th:each="anime : ${topAiringAnime}">
+      <div class="badge-rating" th:text="${anime.rating} + ' ⭐'">8.5 ⭐</div>
+      <img th:src="${anime.image}" th:alt="${anime.title.english != null ? anime.title.english : anime.title.romaji}" />
+      <div class="anime-card-overlay">
+        <h3 th:text="${anime.title.english != null ? anime.title.english : anime.title.romaji}">Title</h3>
+        <div class="anime-card-info">
+          <p><strong>Episodes:</strong> <span th:text="${anime.totalEpisodes}"></span></p>
+          <p><strong>Status:</strong> <span th:text="${anime.status}"></span></p>
+          <p><strong>Release:</strong> <span th:text="${anime.releaseDate}"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="text-center mt-4">
+    <a th:if="${currentPage > 1}" th:href="@{/top-airing(page=${currentPage - 1})}" class="btn btn-outline-purple mx-1">&lt; Prev</a>
+    <span class="mx-2">Page <span th:text="${currentPage}">1</span></span>
+    <a th:if="${hasNextTop}" th:href="@{/top-airing(page=${currentPage + 1})}" class="btn btn-outline-purple mx-1">Next &gt;</a>
+  </div>
+</section>
+
+</body>
+</html>
