@@ -52,7 +52,33 @@ public class HomeController {
         return "index";
     }
 //
-@GetMapping("/music-downloader")
+
+    @GetMapping("/Recent")
+    public String Recent(){return "index";}
+    // Popular Page with fetching logic
+    @GetMapping("/popular")
+    public String popular(@RequestParam(defaultValue = "1") int page, Model model) {
+        int perPage = 12;
+        PopularAnimeWrapper popularWrapper = popularService.getPopularAnime(page, perPage).block();
+        model.addAttribute("popularAnime", popularWrapper.getResults());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("hasNextPopular", popularWrapper.isHasNextPage());
+        return "popular";
+    }
+
+    // Top Airing Page with trending anime fetching
+    @GetMapping("/top-airing")
+    public String topairing(@RequestParam(defaultValue = "1") int page, Model model) {
+        int perPage = 12;
+        TrendingWrapper trendingWrapper = trendingService.getTrendingAnime(page, perPage).block();
+        model.addAttribute("topAiringAnime", trendingWrapper.getResults()); // match the template
+        model.addAttribute("currentPage", page);
+        model.addAttribute("hasNextTop", trendingWrapper.isHasNextPage());
+        return "topairing";
+    }
+
+
+    @GetMapping("/music-downloader")
 public String showMusicDownloader() {
     return "music-downloader";
 }
@@ -63,6 +89,7 @@ public String showMusicDownloader() {
         model.addAttribute("result", result);
         return "music-downloader";
     }
+
 
     @GetMapping("/video-downloader")
     public String showVideoDownloader() {
