@@ -103,4 +103,16 @@ public String showMusicDownloader() {
         return "video-downloader";
     }
 
+    @GetMapping("/about")
+    public String about() { return "about"; }
+    @GetMapping("/privacy")
+    public String privacy() { return "privacy"; }
+    @GetMapping("/terms") public String terms() { return "terms"; }
+    @GetMapping("/disclaimer") public String disclaimer() { return "disclaimer"; }
+    @GetMapping("/contact") public String contact() { return "contact"; }
+    @GetMapping("/dmca")
+    public String dmca() {
+        return "dmca";
+    }
+
 }

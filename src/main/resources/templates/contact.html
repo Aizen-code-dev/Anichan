@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact AniChan Support</title>
+  <meta name="description" content="Contact AniChan for support, questions, or business inquiries. We're here to help you with anime updates and features.">
+  <link rel="stylesheet" th:href="@{/CSS/style.css}">
+</head>
+<body class="bg-dark text-light">
+
+<div class="container py-5">
+  <h1 class="text-warning mb-4">Contact Us</h1>
+  <p>We’d love to hear from you! Whether it’s feedback, partnership requests, or reporting an issue — drop us a message below.</p>
+
+  <form th:action="@{/contact/submit}" method="post" class="mt-4">
+    <div class="mb-3">
+      <label class="form-label">Your Name</label>
+      <input type="text" class="form-control" name="name" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Message</label>
+      <textarea class="form-control" rows="5" name="message" required></textarea>
+    </div>
+
+    <button class="btn btn-outline-warning" type="submit">Send Message</button>
+  </form>
+</div>
+
+</body>
+
+</html>

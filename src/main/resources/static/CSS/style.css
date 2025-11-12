@@ -7,6 +7,9 @@ body {
   color: #dcdcdc;
   line-height: 1.6;
 }
+html,body{
+overflow-x:hidden
+}
 
 a {
   color: #9b59b6;

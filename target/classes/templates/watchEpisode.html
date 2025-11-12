@@ -3,13 +3,11 @@
 <head>
 
   <meta name="google-adsense-account" content="ca-pub-8841196775456939">
-
   <title>Watch Episode</title>
 
-  <link rel="icon" th:href="@{/Assets/logo.ico}"
-        type="image/x-icon" />
+  <link rel="icon" th:href="@{/Assets/logo.ico}" type="image/x-icon" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet"  th:href="@{/CSS/style.css}">
+  <link rel="stylesheet" th:href="@{/CSS/style.css}">
   <link rel="stylesheet" th:href="@{/CSS/watch.css}">
   <script th:src="@{/script/watch.js}"></script>
 
@@ -20,21 +18,59 @@
 
   <style>
     .artplayer-app {
-        width: 100%;
-        height: 500px;
-        margin-bottom: 20px;
+      width: 100%;
+      height: 500px;
+      margin-bottom: 20px;
     }
+
     .art-subtitle-English {
-        color: cyan;
-        font-size: 16px;
+      color: cyan;
+      font-size: 16px;
     }
+
     .art-subtitle-Japanese {
-        color: yellow;
-        font-size: 14px;
+      color: yellow;
+      font-size: 14px;
+    }
+
+    .modal-content {
+      animation: fadeInUp 0.4s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Center title and description */
+    .watch-header {
+      text-align: center;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .watch-header h1 {
+      font-weight: 700;
+      color: #f8f9fa;
+      text-shadow: 0 0 8px #ffc107;
+    }
+
+    .watch-header p {
+      color: #d0d0d0;
+      max-width: 800px;
+      margin: 10px auto 0;
+      font-size: 1.05rem;
     }
   </style>
 </head>
-<body>
+
+<body class="bg-dark text-light">
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -47,23 +83,13 @@
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" th:href="@{/}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/popular}">Popular</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/recent}">Recent</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/top-airing}">Top Airing</a>
-        </li>
+        <li class="nav-item"><a class="nav-link active" th:href="@{/}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/popular}">Popular</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/recent}">Recent</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/top-airing}">Top Airing</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-             aria-expanded="false">
-            Categories
-          </a>
+             aria-expanded="false">Categories</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" th:href="@{/category/action}">Action</a></li>
             <li><a class="dropdown-item" th:href="@{/category/adventure}">Adventure</a></li>
@@ -73,7 +99,7 @@
         </li>
       </ul>
 
-      <!-- Search Form inside navbar -->
+      <!-- Search Form -->
       <form class="d-flex" th:action="@{/api/anime/search/view}" method="get">
         <input class="form-control me-2" type="search" name="q" placeholder="Search anime..." aria-label="Search" required>
         <button class="btn btn-outline-primary" type="submit">Search</button>
@@ -82,17 +108,47 @@
   </div>
 </nav>
 
-<div class="container mt-5">
-  <h1>Watch Episode</h1>
+<!-- Legal Notice Modal -->
+<div class="modal fade" id="streamNoticeModal" tabindex="-1" aria-labelledby="streamNoticeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light border border-warning rounded-3 shadow-lg">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-warning" id="streamNoticeLabel">⚠️ Important Notice</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center px-4">
+        <p>
+          AniChan does <strong>not host or stream anime episodes directly</strong>.
+          We use trusted third-party sources and official APIs to provide preview access and redirects to legal viewing platforms.
+        </p>
+        <p class="mt-3 text-secondary">
+          You can continue to watch using our secure redirect player or explore related manga and recommendations below.
+        </p>
+      </div>
+      <div class="modal-footer d-flex justify-content-center border-0">
+        <a th:href="@{/manga}" class="btn btn-outline-info px-4">📖 Read Manga</a>
+        <button id="continueWatch" class="btn btn-warning text-dark fw-bold px-4" data-bs-dismiss="modal">▶ Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Watch Section -->
+<div class="container">
+  <div class="watch-header">
+    <h1>🎬 Watch Episode</h1>
+    <p>
+      Enjoy your favorite anime episodes in HD quality with multi-language subtitles and smooth playback.
+      Choose your preferred episode from the list below and start streaming instantly.
+    </p>
+  </div>
   <div class="artplayer-app" id="artplayer-app"></div>
 </div>
 
-<!-- Episode Pagination Control -->
+<!-- Episode Pagination -->
 <div class="pagination-controls d-flex justify-content-end align-items-center mb-3">
   <label class="me-2">Select Episode Range:</label>
-  <select id="episode-range" class="form-select w-auto">
-    <!-- You can dynamically generate options if needed -->
-  </select>
+  <select id="episode-range" class="form-select w-auto"></select>
 </div>
 
 <div class="episode-grid">
@@ -120,152 +176,65 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 </div>
+
+<!-- Artplayer Config -->
 <script th:inline="javascript">
   /*<![CDATA[*/
- const episodeStream = [[${episodeStream}]]; // injects full JSON object
-    const videoUrl = episodeStream && episodeStream.sources && episodeStream.sources.length > 0
-        ? /*[[@{/api/zoro/proxy(url=${episodeStream.sources[0].url})}]]*/ ''
-        : null;
-    const subtitles = episodeStream && episodeStream.subtitles ? episodeStream.subtitles : [];
+  const episodeStream = [[${episodeStream}]];
+  const videoUrl = episodeStream && episodeStream.sources && episodeStream.sources.length > 0
+      ? /*[[@{/api/zoro/proxy(url=${episodeStream.sources[0].url})}]]*/ ''
+      : null;
+  const subtitles = episodeStream && episodeStream.subtitles ? episodeStream.subtitles : [];
   /*]]>*/
 
   const subtitleTracks = subtitles.map(sub => ({
-      name: sub.lang,
-      url: sub.url,
+    name: sub.lang,
+    url: sub.url,
   }));
 
   const art = new Artplayer({
-      container: '#artplayer-app',
-      url: videoUrl,
-      type: 'm3u8',
-      autoplay: true,
-      setting: true,
-         controls: [
-        {
-            position: 'right',
-            html: 'Fullscreen',
-            tooltip: 'Toggle fullscreen',
-            click: function () {
-                art.fullscreen = !art.fullscreen;
-            }
-        }
+    container: '#artplayer-app',
+    url: videoUrl,
+    type: 'm3u8',
+    autoplay: true,
+    setting: true,
+    plugins: [
+      artplayerPluginHlsControl({
+        quality: { control: true, setting: true, title: 'Quality', auto: 'Auto' },
+        audio: { control: true, setting: true, title: 'Audio', auto: 'Auto' }
+      }),
+      artplayerPluginMultipleSubtitles({
+        subtitles: subtitleTracks,
+        default: 'English',
+      }),
     ],
-      plugins: [
-          artplayerPluginHlsControl({
-              quality: {
-                  control: true,
-                  setting: true,
-                  getName: (level) => level.height + 'P',
-                  title: 'Quality',
-                  auto: 'Auto',
-              },
-              audio: {
-                  control: true,
-                  setting: true,
-                  getName: (track) => track.name,
-                  title: 'Audio',
-                  auto: 'Auto',
-              }
-          }),
-          artplayerPluginMultipleSubtitles({
-              subtitles: subtitleTracks,
-              default: 'English',
-          }),
-      ],
-      settings: [
-          {
-              width: 200,
-              html: 'Subtitle',
-              tooltip: 'Double',
-              icon: '<img width="22" height="22" src="https://cdn-icons-png.flaticon.com/512/2913/2913466.png">',
-              selector: [
-                  {
-                      html: 'Display',
-                      tooltip: 'Show',
-                      switch: true,
-                      onSwitch: function (item) {
-                          item.tooltip = item.switch ? 'Hide' : 'Show';
-                          art.subtitle.show = !item.switch;
-                          return !item.switch;
-                      },
-                  },
-                  {
-                      html: 'Reverse',
-                      tooltip: 'Off',
-                      switch: false,
-                      onSwitch: function (item) {
-                          item.tooltip = item.switch ? 'Off' : 'On';
-                          if (item.switch) {
-                              art.plugins.multipleSubtitles.tracks(['English', 'Japanese']);
-                          } else {
-                              art.plugins.multipleSubtitles.tracks(['Japanese', 'English']);
-                          }
-                          return !item.switch;
-                      },
-                  },
-                  {
-                      html: 'Double',
-                      name: 'double',
-                  },
-                  ...subtitleTracks.map(track => ({
-                      html: track.name,
-                      name: track.name
-                  }))
-              ],
-              onSelect: function (item) {
-                  if (item.name === 'double') {
-                      art.plugins.multipleSubtitles.reset(); // load all tracks
-                  } else {
-                      art.plugins.multipleSubtitles.tracks([item.name]);
-                  }
-                  return item.html;
-              },
-          }
-      ],
-      customType: {
-          m3u8: function (video, url, art) {
-              if (Hls.isSupported()) {
-                  if (art.hls) art.hls.destroy();
-                  const hls = new Hls();
-                  hls.loadSource(url);
-                  hls.attachMedia(video);
-                  art.hls = hls;
-                  art.on('destroy', () => hls.destroy());
-              } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                  video.src = url;
-              } else {
-                  art.notice.show = 'Unsupported playback format: m3u8';
-              }
-          }
+    customType: {
+      m3u8: function (video, url, art) {
+        if (Hls.isSupported()) {
+          if (art.hls) art.hls.destroy();
+          const hls = new Hls();
+          hls.loadSource(url);
+          hls.attachMedia(video);
+          art.hls = hls;
+          art.on('destroy', () => hls.destroy());
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = url;
+        } else {
+          art.notice.show = 'Unsupported playback format: m3u8';
+        }
       }
+    }
   });
 
-  art.on('ready', () => {
-      console.info(art.theme);
-      art.theme = '#FFFF00';
+  document.addEventListener("DOMContentLoaded", function () {
+    const streamModal = new bootstrap.Modal(document.getElementById('streamNoticeModal'));
+    streamModal.show();
+    const playerContainer = document.getElementById('artplayer-app');
+    playerContainer.style.display = "none";
+    document.getElementById('continueWatch').addEventListener('click', function() {
+      playerContainer.style.display = "block";
+    });
   });
-
-  // Custom subtitle style
-  const subtitleStyle = `
-  .art-subtitle-English {
-      color: cyan;
-      font-size: 16px;
-  }
-  .art-subtitle-Japanese {
-      color: yellow;
-      font-size: 14px;
-  }
-  `;
-  const $style = document.createElement('style');
-  $style.id = 'artplayer-subtitle-style';
-  $style.textContent = subtitleStyle;
-  document.head.appendChild($style);
-
-
- Artplayer.RECONNECT_TIME_MAX = 10;
-Artplayer.FAST_FORWARD_TIME = 2000;
-Artplayer.FAST_FORWARD_VALUE = 5;
-
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>

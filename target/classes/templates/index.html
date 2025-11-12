@@ -67,37 +67,82 @@
 <!-- Featured Swiper -->
 <div class="swiper-container featured-swiper my-4">
   <div class="swiper-wrapper">
+
+
     <div class="swiper-slide">
       <img th:src="@{/onepiece.jpg}" alt="One Piece anime poster showing Luffy in action with the crew">
       <div class="overlay featured-overlay">
         <h3>One Piece</h3>
         <p class="featured-rating">Rating: 8.9/10 | Total Episodes: 1000+</p>
         <p class="featured-description">
-          Follow Luffy and the Straw Hat Pirates on their epic journey to find the legendary One Piece treasure. A must-watch classic with an engaging story and lovable characters.
+          <strong>One Piece</strong> is a legendary anime series created by Eiichiro Oda that follows <strong>Monkey D. Luffy</strong> — a cheerful and determined young pirate who dreams of becoming the <em>King of the Pirates</em>.
+          After eating a mystical Devil Fruit, Luffy gains the power to stretch like rubber, setting off with his diverse crew known as the <strong>Straw Hat Pirates</strong> on a thrilling journey across the Grand Line.
         </p>
+
+        <p class="featured-description">
+          Known for its <strong>deep storytelling, world-building, and emotional arcs</strong>, One Piece explores themes of freedom, friendship, and adventure.
+          Each island introduces new allies, powerful enemies, and mysteries surrounding the ancient history of the world.
+          With over 1000 episodes and counting, this anime continues to inspire generations of fans and stands as one of the most successful series of all time.
+        </p>
+
+        <p class="featured-description">
+          Whether you’re a longtime fan or new to anime, One Piece delivers a perfect balance of <strong>humor, action, and heartfelt moments</strong>.
+          Its ever-growing universe, memorable characters like Zoro, Nami, Sanji, and Robin, and its emotional storytelling make it a timeless adventure worth every episode.
+        </p>
+
         <a th:href="@{/api/anime/search/view(q='onepiece')}" class="btn-featured">Watch Now</a>
       </div>
+
     </div>
+
     <div class="swiper-slide">
       <img th:src="@{/demon.jpg}" alt="Demon Slayer anime poster featuring Tanjiro fighting demons">
       <div class="overlay featured-overlay">
-        <h3>Demon Slayer</h3>
+        <h3>Demon Slayer: Kimetsu no Yaiba</h3>
         <p class="featured-rating">Rating: 8.57/10 | Total Episodes: 26</p>
+
         <p class="featured-description">
-          Tanjiro embarks on a dangerous mission to save his sister and defeat demons. Stunning animation and heartfelt storytelling make this a modern favorite.
+          <strong>Demon Slayer: Kimetsu no Yaiba</strong> follows <strong>Tanjiro Kamado</strong>, a kind-hearted boy living in Taisho-era Japan, whose peaceful life shatters when his family is brutally attacked by demons.
+          His sister, <strong>Nezuko</strong>, is the sole survivor — but transformed into a demon herself. Determined to restore her humanity, Tanjiro joins the <em>Demon Slayer Corps</em> to hunt down the demon responsible and uncover the truth behind the curse.
         </p>
+
+        <p class="featured-description">
+          Produced by <strong>Ufotable</strong>, the anime is praised for its <strong>jaw-dropping animation, breathtaking fight choreography, and emotional storytelling</strong>.
+          Each battle showcases Tanjiro’s unwavering resolve, his iconic “Water Breathing” sword techniques, and the unbreakable bond between him and Nezuko — a symbol of hope and love amidst darkness.
+        </p>
+
+        <p class="featured-description">
+          With its powerful soundtrack, rich lore, and unforgettable characters like <strong>Zenitsu</strong> and <strong>Inosuke</strong>, Demon Slayer quickly became a global sensation.
+          From the “Mugen Train” arc to the “Swordsmith Village” saga, it continues to redefine modern anime with its cinematic quality and emotional depth.
+        </p>
+
         <a th:href="@{/api/anime/search/view(q='Demon Slayer')}" class="btn-featured">Watch Now</a>
       </div>
     </div>
+
     <!-- Jujutsu Kaisen Slide -->
     <div class="swiper-slide">
       <img th:src="@{/jujutsu.jpg}" alt="Jujutsu Kaisen anime poster featuring Yuji Itadori and Sukuna">
       <div class="overlay featured-overlay">
         <h3>Jujutsu Kaisen</h3>
         <p class="featured-rating">Rating: 8.8/10 | Total Episodes: 24</p>
+
         <p class="featured-description">
-          Follow Yuji Itadori as he joins the world of jujutsu sorcerers to fight curses and uncover the secrets of Sukuna. Action-packed and emotionally gripping anime.
+          <strong>Jujutsu Kaisen</strong> is a dark fantasy anime that follows <strong>Yuji Itadori</strong>, a high school student with extraordinary strength and kindness.
+          When he accidentally consumes a cursed object — the finger of <strong>Ryomen Sukuna</strong>, the King of Curses — he becomes the vessel of one of the most feared beings in existence.
+          To control this dangerous power, Yuji enrolls in the <em>Tokyo Jujutsu High</em> under the guidance of <strong>Satoru Gojo</strong>, the world’s most powerful sorcerer.
         </p>
+
+        <p class="featured-description">
+          The series masterfully blends <strong>horror, supernatural battles, and emotional depth</strong>, exploring the fine line between humanity and curses.
+          Every episode delivers stunning animation and intense fight sequences as Yuji and his friends — <strong>Megumi Fushiguro</strong> and <strong>Nobara Kugisaki</strong> — face terrifying cursed spirits born from human negativity.
+        </p>
+
+        <p class="featured-description">
+          Created by <strong>Gege Akutami</strong> and produced by <strong>Mappa Studio</strong>, Jujutsu Kaisen has become a modern classic known for its philosophical themes, fluid animation, and unforgettable characters.
+          With the rise of Sukuna’s influence inside Yuji and the mystery surrounding cursed energy, the story continues to push the boundaries of shonen storytelling.
+        </p>
+
         <a th:href="@{/api/anime/search/view(q='Jujutsu Kaisen')}" class="btn-featured">Watch Now</a>
       </div>
     </div>
@@ -108,9 +153,23 @@
       <div class="overlay featured-overlay">
         <h3>Bleach</h3>
         <p class="featured-rating">Rating: 8.2/10 | Total Episodes: 366</p>
+
         <p class="featured-description">
-          Follow Ichigo Kurosaki as he becomes a Soul Reaper to protect the living and the dead. A classic shonen anime full of thrilling battles and memorable characters.
+          <strong>Bleach</strong> follows <strong>Ichigo Kurosaki</strong>, an ordinary high school student with the extraordinary ability to see spirits.
+          His life changes forever when he meets <strong>Rukia Kuchiki</strong>, a Soul Reaper responsible for guiding souls to the afterlife and purging evil spirits known as Hollows.
+          When Rukia is injured during battle, Ichigo inherits her powers — stepping into the role of a substitute Soul Reaper.
         </p>
+
+        <p class="featured-description">
+          Set across realms like the <em>Human World</em>, <em>Soul Society</em>, and <em>Hueco Mundo</em>, Bleach explores themes of duty, friendship, and the eternal struggle between life and death.
+          With its intricate lore, fast-paced sword battles, and unique supernatural abilities known as <strong>Zanpakutō</strong>, Bleach quickly became one of the most iconic anime of the 2000s.
+        </p>
+
+        <p class="featured-description">
+          Created by <strong>Tite Kubo</strong> and produced by <strong>Studio Pierrot</strong>, Bleach delivers unforgettable arcs such as the “Soul Society” and “Arrancar” sagas.
+          The recent <strong>Thousand-Year Blood War</strong> continuation showcases the series’ mature evolution, combining nostalgic charm with modern animation and storytelling.
+        </p>
+
         <a th:href="@{/api/anime/search/view(q='Bleach')}" class="btn-featured">Watch Now</a>
       </div>
     </div>
@@ -176,33 +235,168 @@
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="footer">
+<section class="about-site relative bg-gradient-to-b from-gray-900 via-gray-950 to-black text-gray-100 py-20 overflow-hidden">
+  <div class="absolute inset-0 opacity-10 bg-[url('/anime-bg-pattern.svg')] bg-center bg-cover"></div>
+
+  <div class="container relative mx-auto px-6 lg:px-12">
+    <!-- Title -->
+    <h2 class="text-center text-5xl font-extrabold mb-10 text-indigo-400 drop-shadow-lg">
+      About <span class="text-white">AniChan</span>
+    </h2>
+
+    <!-- Intro Section -->
+    <div class="max-w-4xl mx-auto space-y-6 text-lg leading-relaxed text-gray-200">
+      <p>
+        Welcome to <strong class="text-indigo-300">AniChan</strong> — your trusted companion for discovering, learning about,
+        and celebrating the world of <strong>anime</strong> and <strong>manga</strong>.
+        AniChan was created by passionate fans for fans, designed to be more than just an anime list or streaming directory.
+        We offer a complete exploration platform where you can uncover <em>in-depth storylines, creative backgrounds, voice actors, studios, character arcs, and emotional journeys</em> — all in one elegant, accessible space.
+      </p>
+
+      <p>
+        Our mission is to enhance your anime experience by bringing storytelling, art, and production insights together.
+        Whether you’re revisiting classics from the golden age of anime or exploring newly released series, AniChan aims to help you discover hidden gems, understand deeper plot elements,
+        and connect with the creative minds behind your favorite shows.
+        Each page is written and curated to offer a more <strong>immersive, educational, and context-rich anime experience</strong>.
+      </p>
+
+      <p>
+        We believe anime is not just entertainment — it’s a global art form that blends emotion, philosophy, and creativity.
+        Through AniChan, we’re building a bridge between storytelling and understanding — a hub where fans, creators, and newcomers can explore anime with meaning and passion.
+      </p>
+    </div>
+
+    <!-- Mission -->
+    <div class="border-t border-gray-700 mt-14 pt-10">
+      <h3 class="text-2xl font-semibold text-indigo-300 mb-4 text-center">🎯 Our Mission</h3>
+      <p class="max-w-4xl mx-auto text-lg leading-relaxed text-gray-200">
+        Our goal is to create the most accessible and informative anime discovery platform for fans around the world.
+        Whether you love timeless legends like <strong>Naruto</strong> and <strong>One Piece</strong> or modern phenomena like
+        <strong>Attack on Titan</strong> and <strong>Jujutsu Kaisen</strong>, AniChan provides detailed insights,
+        ratings, production details, and related manga connections — making it easier to dive deeper into every series.
+      </p>
+    </div>
+
+    <!-- Transparency -->
+    <div class="border-t border-gray-700 mt-14 pt-10">
+      <h3 class="text-2xl font-semibold text-indigo-300 mb-4 text-center">⚖️ Transparency & Legal Notice</h3>
+      <p class="max-w-4xl mx-auto text-lg leading-relaxed text-gray-200">
+        AniChan is an independent, fan-driven project that operates with respect for intellectual property rights.
+        We <strong>do not host, stream, or distribute copyrighted material</strong> directly.
+        All anime titles, images, and trademarks belong to their rightful owners.
+        The data we display is sourced from trusted <strong>third-party APIs</strong> for informational and educational use only.
+      </p>
+
+      <p class="max-w-4xl mx-auto text-lg leading-relaxed mt-4 text-gray-200">
+        If you are a rights holder and believe your content has been used improperly, please refer to our
+        <a th:href="@{/dmca}" class="text-indigo-400 hover:underline">DMCA Policy</a> page for immediate removal or modification requests.
+      </p>
+    </div>
+
+    <!-- Community -->
+    <div class="border-t border-gray-700 mt-14 pt-10">
+      <h3 class="text-2xl font-semibold text-indigo-300 mb-4 text-center">💬 Community & Support</h3>
+      <p class="max-w-4xl mx-auto text-lg leading-relaxed text-gray-200">
+        AniChan continues to evolve with community input and collaboration.
+        You can support our mission and help keep the project alive via
+        <a href="https://ko-fi.com/aizenstudio" target="_blank" class="text-indigo-400 hover:underline">Ko-Fi</a>,
+        or contact our team at
+        <a href="mailto:support@anichan.com" class="text-indigo-400 hover:underline">support@anichan.com</a>.
+      </p>
+    </div>
+
+    <!-- Footer tagline -->
+    <div class="text-center mt-16">
+      <p class="text-xl font-medium text-gray-300">
+        <strong class="text-indigo-400">AniChan</strong> — made by fans, for fans.
+        <br class="hidden md:block"/>Explore. Discover. Enjoy Anime with Context.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Bottom Banner Ad -->
+<div class="container my-4 text-center">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-8841196775456939"
+       data-ad-slot="9224377224"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<!-- fragments/footer.html -->
+<footer class="footer bg-dark text-light py-5 mt-5 border-top border-secondary">
   <div class="container">
-    <div class="footer-content">
-      <div class="footer-section about">
-        <h3>AniChan</h3>
-        <p>Your go-to place for the latest and greatest anime streaming experience. Read, watch, and enjoy your favorite anime series all in one place.</p>
-        <p>&copy; AniChan 2025 · All rights reserved.</p>
+    <div class="row gy-4">
+
+      <!-- About Section -->
+      <div class="col-md-4">
+        <h3 class="text-warning mb-3">AniChan</h3>
+        <p style="line-height:1.8;">
+          <strong>AniChan</strong> is your trusted hub for discovering trending anime, reading in-depth summaries, and exploring character insights.
+          We aim to deliver a safe, informative, and ad-friendly space for anime lovers worldwide.
+        </p>
         <div style="margin-top: 20px;">
-          <a href="https://ko-fi.com/aizenstudio" target="_blank" rel="noopener noreferrer" class="btn-buy-coffee">
-            ☕ Buy Me Coffee
+          <a href="https://ko-fi.com/aizenstudio" target="_blank" rel="noopener noreferrer"
+             class="btn btn-outline-warning btn-sm rounded-pill">
+            ☕ Buy Me a Coffee
           </a>
         </div>
       </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-2">
+        <h5 class="text-uppercase text-warning mb-3">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a th:href="@{/}" class="text-light text-decoration-none">Home</a></li>
+          <li><a th:href="@{/about}" class="text-light text-decoration-none">About Us</a></li>
+          <li><a th:href="@{/contact}" class="text-light text-decoration-none">Contact</a></li>
+          <li><a th:href="@{/blog}" class="text-light text-decoration-none">Blog</a></li>
+          <li><a th:href="@{/sitemap.xml}" class="text-light text-decoration-none">Sitemap</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="col-md-3">
+        <h5 class="text-uppercase text-warning mb-3">Legal</h5>
+        <ul class="list-unstyled">
+          <li><a th:href="@{/privacy}" class="text-light text-decoration-none">Privacy Policy</a></li>
+          <li><a th:href="@{/terms}" class="text-light text-decoration-none">Terms of Service</a></li>
+          <li><a th:href="@{/disclaimer}" class="text-light text-decoration-none">Disclaimer</a></li>
+          <li><a th:href="@{/dmca}" class="text-light text-decoration-none">DMCA Notice</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col-md-3">
+        <h5 class="text-uppercase text-warning mb-3">Contact</h5>
+        <p>Email: <a href="mailto:kuronolimit@gmail.com" class="text-info">contact@anichan.com</a></p>
+        <p>Follow us:</p>
+        <div>
+          <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-discord"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
     </div>
-  </div>
-  <!-- Bottom Banner Ad -->
-  <div class="container my-4 text-center">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8841196775456939"
-         data-ad-slot="9224377224"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+
+    <hr class="border-secondary my-4">
+
+    <!-- Bottom Footer -->
+    <div class="text-center small text-muted">
+      <p>&copy; <span th:text="${#dates.format(today, 'yyyy')}">2025</span> <strong>AniChan</strong>. All rights reserved.</p>
+      <p>
+        AniChan is an independent fan project and does not host or stream any copyrighted material directly.
+        All anime titles, images, and trademarks are the property of their respective owners.
+        Content and metadata are provided through  third-party APIs  and other public sources.
+        AniChan is not affiliated with or endorsed by any anime studio or publisher.
+      </p>
+      <p><em>Made with ❤️ by Aizen Studio</em></p>
+    </div>
   </div>
 </footer>
 
