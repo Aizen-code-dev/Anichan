@@ -60,6 +60,13 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.sapher</groupId>
+			<artifactId>youtubedl</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/youtubedl.jar</systemPath>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

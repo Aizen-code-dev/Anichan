@@ -6,15 +6,29 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 
 @Service
 public class DownloaderService {
 
-    private static final String YT_DLP = "yt-dlp";  // path if needed: "C:/yt-dlp/yt-dlp.exe"
+    // Auto-detect yt-dlp path
+    private static final String YT_DLP = getYtDlpPath();
+
+    private static String getYtDlpPath() {
+        // Windows default manual placement
+        String winPath = "C:/yt-dlp/yt-dlp.exe";
+        if (new File(winPath).exists()) return winPath;
+
+        // Linux/Mac
+        String unix = "/usr/local/bin/yt-dlp";
+        if (new File(unix).exists()) return unix;
+
+        return "yt-dlp"; // fallback to system PATH
+    }
 
     // ------------------------------------------------------------
-    // MAIN VIDEO DOWNLOAD
+    // MAIN VIDEO (MP4)
     // ------------------------------------------------------------
     public DownloadResponse downloadVideo(String url) {
         DownloadResponse response = runYtDlp(url);
@@ -22,34 +36,36 @@ public class DownloaderService {
 
         try {
             JSONArray formats = response.getFormats();
-            String best = null;
+            String bestUrl = null;
 
+            // Best MP4 selection
             for (int i = 0; i < formats.length(); i++) {
                 JSONObject f = formats.getJSONObject(i);
-                if (f.has("url") && f.has("ext") && f.getString("ext").equals("mp4")) {
-                    best = f.getString("url");
+
+                if (f.has("url") && "mp4".equals(f.optString("ext"))) {
+                    bestUrl = f.optString("url");
                     break;
                 }
             }
 
-            if (best != null) {
-                response.setDownloadUrl(best);
-                response.setType("mp4");
-            } else {
+            if (bestUrl == null) {
                 response.setError(true);
-                response.setTitle("No MP4 format available");
+                response.setTitle("No MP4 format found");
+            } else {
+                response.setDownloadUrl(bestUrl);
+                response.setType("mp4");
             }
 
         } catch (Exception e) {
             response.setError(true);
-            response.setTitle("Video parsing error");
+            response.setTitle("Video parsing failed");
         }
 
         return response;
     }
 
     // ------------------------------------------------------------
-    // AUDIO DOWNLOAD (MP3)
+    // AUDIO (BEST MP3/AAC/WEBM AUDIO)
     // ------------------------------------------------------------
     public DownloadResponse downloadMusic(String url) {
         DownloadResponse response = runYtDlp(url);
@@ -57,35 +73,36 @@ public class DownloaderService {
 
         try {
             JSONArray formats = response.getFormats();
-            String bestAudio = null;
+            String bestAudioUrl = null;
 
             for (int i = 0; i < formats.length(); i++) {
                 JSONObject f = formats.getJSONObject(i);
+                String acodec = f.optString("acodec", "none");
 
-                if (f.has("url") && f.getString("acodec") != null && !f.getString("acodec").equals("none")) {
-                    bestAudio = f.getString("url");
+                if (f.has("url") && !acodec.equals("none")) {
+                    bestAudioUrl = f.optString("url");
                     break;
                 }
             }
 
-            if (bestAudio != null) {
-                response.setDownloadUrl(bestAudio);
-                response.setType("audio");
-            } else {
+            if (bestAudioUrl == null) {
                 response.setError(true);
-                response.setTitle("No audio format found");
+                response.setTitle("No audio stream found");
+            } else {
+                response.setDownloadUrl(bestAudioUrl);
+                response.setType("audio");
             }
 
         } catch (Exception e) {
             response.setError(true);
-            response.setTitle("Music parsing error");
+            response.setTitle("Audio parsing failed");
         }
 
         return response;
     }
 
     // ------------------------------------------------------------
-    // yt-dlp PROCESS EXECUTION
+    // yt-dlp Execution
     // ------------------------------------------------------------
     private DownloadResponse runYtDlp(String videoUrl) {
         DownloadResponse response = new DownloadResponse();
@@ -99,37 +116,39 @@ public class DownloaderService {
             Process process = pb.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-            String output = reader.lines().reduce("", (a, b) -> a + b);
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            String output = sb.toString();
 
             int exit = process.waitFor();
             if (exit != 0 || output.isEmpty()) {
                 response.setError(true);
-                response.setTitle("yt-dlp failed to fetch details");
+                response.setTitle("yt-dlp failed (not installed or wrong path)");
                 return response;
             }
 
             JSONObject json = new JSONObject(output);
 
-            // BASIC INFO
-            String title = json.optString("title", "Unknown");
-            String videoId = json.optString("id", null);
-            String thumbnail = json.optString("thumbnail", null);
-
+            // Basic info
             response.setError(false);
-            response.setTitle(title);
-            response.setVideoId(videoId);
-            response.setThumbnail(thumbnail);
+            response.setTitle(json.optString("title", "Unknown"));
+            response.setVideoId(json.optString("id", null));
+            response.setThumbnail(json.optString("thumbnail", null));
             response.setOriginalUrl(videoUrl);
 
-            // FORMATS (All quality + size + URLs)
+            // Add list of formats
             if (json.has("formats")) {
                 response.setFormats(json.getJSONArray("formats"));
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             response.setError(true);
-            response.setTitle("Something went wrong! please Try again after some time.");
+            response.setTitle("Error executing ");
         }
 
         return response;
