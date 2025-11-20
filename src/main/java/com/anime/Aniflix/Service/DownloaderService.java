@@ -7,166 +7,131 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 public class DownloaderService {
 
-    private static final String API_KEY = "f549f42bd7msh061147b5591999dp1173f8jsn17aae55254a4";
+    private static final String YT_DLP = "yt-dlp";  // path if needed: "C:/yt-dlp/yt-dlp.exe"
 
-    // ✅ MUSIC
-    public DownloadResponse downloadMusic(String url) {
-        DownloadResponse response = extractYouTubeInfo(url);
-        if (response.isError()) return response;
-
-        String videoId = response.getVideoId();
-
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://youtube-mp36.p.rapidapi.com/dl?id=" + videoId))
-                    .header("x-rapidapi-key", API_KEY)
-                    .header("x-rapidapi-host", "youtube-mp36.p.rapidapi.com")
-                    .GET()
-                    .build();
-
-            HttpResponse<String> httpResponse =
-                    HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-            JSONObject json = new JSONObject(httpResponse.body());
-
-            if (json.has("link")) {
-                response.setDownloadUrl(json.getString("link"));
-                response.setType("mp3");
-            } else {
-                response.setError(true);
-                response.setTitle("Failed to get MP3 download link");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.setError(true);
-            response.setTitle("Music API Failed");
-        }
-
-        return response;
-    }
-
-    // ✅ VIDEO FIX — DISPLAY INFO FIRST ✅
+    // ------------------------------------------------------------
+    // MAIN VIDEO DOWNLOAD
+    // ------------------------------------------------------------
     public DownloadResponse downloadVideo(String url) {
-        DownloadResponse response = extractYouTubeInfo(url);
+        DownloadResponse response = runYtDlp(url);
         if (response.isError()) return response;
 
-        String videoId = response.getVideoId();
-
         try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://ytstream-download-youtube-videos.p.rapidapi.com/dl?id=" + videoId))
-                    .header("x-rapidapi-key", API_KEY)
-                    .header("x-rapidapi-host", "ytstream-download-youtube-videos.p.rapidapi.com")
-                    .GET()
-                    .build();
+            JSONArray formats = response.getFormats();
+            String best = null;
 
-            HttpResponse<String> httpResponse =
-                    HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-            JSONObject json = new JSONObject(httpResponse.body());
-
-            if (json.has("formats")) {
-                JSONArray formats = json.getJSONArray("formats");
-                String bestUrl = null;
-
-                for (int i = 0; i < formats.length(); i++) {
-                    JSONObject format = formats.getJSONObject(i);
-
-                    if (format.has("url") &&
-                            format.has("type") &&
-                            format.getString("type").contains("mp4")) {
-                        bestUrl = format.getString("url");
-                        break; // ✅ first best match
-                    }
+            for (int i = 0; i < formats.length(); i++) {
+                JSONObject f = formats.getJSONObject(i);
+                if (f.has("url") && f.has("ext") && f.getString("ext").equals("mp4")) {
+                    best = f.getString("url");
+                    break;
                 }
+            }
 
-                if (bestUrl != null) {
-                    response.setDownloadUrl(bestUrl);
-                    response.setType("mp4");
-                } else {
-                    response.setError(true);
-                    response.setTitle("No MP4 format found");
-                }
-
+            if (best != null) {
+                response.setDownloadUrl(best);
+                response.setType("mp4");
             } else {
                 response.setError(true);
-                response.setTitle("Invalid video API response");
+                response.setTitle("No MP4 format available");
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             response.setError(true);
-            response.setTitle("Video API Failed");
+            response.setTitle("Video parsing error");
         }
 
         return response;
     }
 
-    // ✅ Extract Info (no change)
-    private DownloadResponse extractYouTubeInfo(String urlString) {
+    // ------------------------------------------------------------
+    // AUDIO DOWNLOAD (MP3)
+    // ------------------------------------------------------------
+    public DownloadResponse downloadMusic(String url) {
+        DownloadResponse response = runYtDlp(url);
+        if (response.isError()) return response;
+
+        try {
+            JSONArray formats = response.getFormats();
+            String bestAudio = null;
+
+            for (int i = 0; i < formats.length(); i++) {
+                JSONObject f = formats.getJSONObject(i);
+
+                if (f.has("url") && f.getString("acodec") != null && !f.getString("acodec").equals("none")) {
+                    bestAudio = f.getString("url");
+                    break;
+                }
+            }
+
+            if (bestAudio != null) {
+                response.setDownloadUrl(bestAudio);
+                response.setType("audio");
+            } else {
+                response.setError(true);
+                response.setTitle("No audio format found");
+            }
+
+        } catch (Exception e) {
+            response.setError(true);
+            response.setTitle("Music parsing error");
+        }
+
+        return response;
+    }
+
+    // ------------------------------------------------------------
+    // yt-dlp PROCESS EXECUTION
+    // ------------------------------------------------------------
+    private DownloadResponse runYtDlp(String videoUrl) {
         DownloadResponse response = new DownloadResponse();
 
         try {
-            String videoId = extractYouTubeId(urlString);
-            if (videoId == null) {
+            ProcessBuilder pb = new ProcessBuilder(
+                    YT_DLP, "-j", videoUrl
+            );
+            pb.redirectErrorStream(true);
+
+            Process process = pb.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            String output = reader.lines().reduce("", (a, b) -> a + b);
+
+            int exit = process.waitFor();
+            if (exit != 0 || output.isEmpty()) {
                 response.setError(true);
-                response.setTitle("Invalid YouTube URL");
+                response.setTitle("yt-dlp failed to fetch details");
                 return response;
             }
 
-            URL url = new URL("https://www.youtube.com/watch?v=" + videoId);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("User-Agent", "Mozilla/5.0");
+            JSONObject json = new JSONObject(output);
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder html = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) html.append(line);
-            reader.close();
+            // BASIC INFO
+            String title = json.optString("title", "Unknown");
+            String videoId = json.optString("id", null);
+            String thumbnail = json.optString("thumbnail", null);
 
-            Matcher titleMatcher = Pattern.compile("<title>(.*?)</title>").matcher(html.toString());
-            String title = titleMatcher.find() ? titleMatcher.group(1).replace("- YouTube", "").trim() : "Unknown Title";
-
+            response.setError(false);
             response.setTitle(title);
             response.setVideoId(videoId);
-            response.setThumbnail("https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg");
-            response.setOriginalUrl(urlString);
-            response.setError(false);
+            response.setThumbnail(thumbnail);
+            response.setOriginalUrl(videoUrl);
+
+            // FORMATS (All quality + size + URLs)
+            if (json.has("formats")) {
+                response.setFormats(json.getJSONArray("formats"));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
             response.setError(true);
-            response.setTitle("Failed to fetch video info");
+            response.setTitle("yt-dlp execution error");
         }
 
         return response;
-    }
-
-    private String extractYouTubeId(String url) {
-        String[] patterns = {
-                "v=([0-9A-Za-z_-]{11})",
-                "be/([0-9A-Za-z_-]{11})",
-                "shorts/([0-9A-Za-z_-]{11})",
-                "embed/([0-9A-Za-z_-]{11})"
-        };
-
-        for (String p : patterns) {
-            Matcher m = Pattern.compile(p).matcher(url);
-            if (m.find()) return m.group(1);
-        }
-        return null;
     }
 }
